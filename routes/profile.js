@@ -12,13 +12,13 @@ router.get('/profile', (req, res) => {
 				return res.status(500).redirect('/');
 			}
 
-			res.status(200).contentType('text/html').render('profile', { 
+			return res.status(200).contentType('text/html').render('profile', { 
 				user: req.session.user,
 				currentUser: result[0]
 			});
 		});
 	} else {
-		res.status(200).contentType('text/html').render('profile', { user: null });
+		return res.status(200).contentType('text/html').render('profile', { user: null });
 	}
 });
 

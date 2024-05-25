@@ -20,9 +20,29 @@ app.use(session({
 
 app.get('/', (req, res) => {
 	if (req.session.user) {
-		res.status(200).contentType('text/html').render('index', { user: req.session.user });
+		connection.query(`SELECT * FROM dishes ORDER BY amount_of_time_ordered LIMIT 3`, (error, result) => {
+			if (error) {
+				return res.status(500).redirect('/');
+			}
+
+			return res.status(200).contentType('text/html').render('index', { 
+				user: req.session.user,
+				dishes: result,
+			});
+
+		});
 	} else {
-		res.status(200).contentType('text/html').render('index', { user: null });
+		connection.query(`SELECT * FROM dishes ORDER BY amount_of_time_ordered LIMIT 3`, (error, result) => {
+			if (error) {
+				return res.status(500).redirect('/');
+			}
+
+			return res.status(200).contentType('text/html').render('index', { 
+				user: null,
+				dishes: result,
+			});
+
+		});
 	}
 });
 
@@ -34,9 +54,9 @@ app.use(profileRoutes);
 
 app.get('/*', function(req, res) {
 	if (req.session.user) {
-		res.status(404).render('404', { user: req.session.user });
+		return res.status(404).render('404', { user: req.session.user });
 	} else {
-		res.status(404).render('404', { user: null });
+		return res.status(404).render('404', { user: null });
 	}
 });
 

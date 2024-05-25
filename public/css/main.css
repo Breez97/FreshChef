@@ -25,7 +25,7 @@ body {
 }
 
 .header-dish-text {
-	font-size: 20px;
+	font-size: 18px;
 }
 
 .main-dish-text {
@@ -289,4 +289,8 @@ body {
 .quantity {
     width: 85px;
     text-align: center;
+}
+
+.button-hidden {
+	display: none;
 }

@@ -40,102 +40,37 @@
 
 			<div class="green-line"></div>
 
-			<div class="how-works-container">
-				<div class="header-header-text">Как работает Green Chef</div>
-				<div class="how-works-image-container">
-					<div class="how-works-image-box">
-						<img src="/img/content/choose_meal.svg">
-						<div class="how-works-box-description">
-							<div class="header-text">
-								Выберите свои блюда
-							</div>
-							<div class="main-text">
-								Изучите наш разнообразный ассортимент полезных и вкусных блюд, найдите то, что вам по душе, прочитайте описание и добавьте в корзину.
-							</div>
-						</div>
-					</div>
-					<div class="how-works-image-box">
-						<img src="/img/content/cooking_meal.svg">
-						<div class="how-works-box-description">
-							<div class="header-text">
-								Мы готовим для вас
-							</div>
-							<div class="main-text">
-								Наши профессиональные шеф-повара готовят каждое блюдо с использованием свежих и натуральных ингредиентов, обеспечивая высочайшее качество.
-							</div>
-						</div>
-					</div>
-					<div class="how-works-image-box">
-						<img src="/img/content/enjoy_meal.svg">
-						<div class="how-works-box-description">
-							<div class="header-text">
-								Получите и наслаждайтесь
-							</div>
-							<div class="main-text">
-								Получите свежеприготовленные блюда прямо к вашей двери и наслаждайтесь здоровой и вкусной едой без лишних хлопот.
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+			<%- include('./common/how_works.ejs') %>
 
 			<div class="green-line"></div>
 			
 			<div class="most-popupal-container">
 				<div class="header-header-text">Наши самые популярные блюда</div>
 				<div class="dish-box-container">
+					<% for(var i=0; i<dishes.length; i++) {%>
 					<div class="box-link">
 						<div class="dish-box">
-							<img src="/img/dishes/vibrant_veggie_burgers.jpg">
+							<input type="hidden" value="<%=dishes[i].id%>">
+							<img src="<%=dishes[i].img%>">
 							<div class="dish-box-description">
-								<div class="header-dish-text">Vibrant Veggie Burgers</div>
-								<div class="main-dish-text">with Curry Mayo & Fries</div>
+								<div class="header-dish-text"><%=dishes[i].title%></div>
+								<div class="main-dish-text"><%=dishes[i].short_description%></div>
 								<div class="info-button-container">
-									<div class="quantity-button">
+									<div class="dish-button">В корзину</div>
+									<div class="quantity-button button-hidden">
 										<div class="button-section decrement">-</div>
-										<div class="button-section quantity">0</div>
+										<div class="button-section quantity">1</div>
 										<div class="button-section increment">+</div>
 									</div>
 									<div class="info-button-text-container">
-										<div class="info-dish-amount-text">215 г</div>
-										<div class="info-dish-price-text">349 ₽</div>
+										<div class="info-dish-amount-text"><%=dishes[i].amount%> г</div>
+										<div class="info-dish-price-text"><%=dishes[i].price%> ₽</div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="box-link">
-						<div class="dish-box">
-							<img src="/img/dishes/vibrant_veggie_burgers.jpg">
-							<div class="dish-box-description">
-								<div class="header-dish-text">Vibrant Veggie Burgers</div>
-								<div class="main-dish-text">with Curry Mayo & Fries</div>
-								<div class="info-button-container">
-									<div class="dish-button">В корзину</div>
-									<div class="info-button-text-container">
-										<div class="info-dish-amount-text">215 г</div>
-										<div class="info-dish-price-text">349 ₽</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="box-link">
-						<div class="dish-box">
-							<img src="/img/dishes/vibrant_veggie_burgers.jpg">
-							<div class="dish-box-description">
-								<div class="header-dish-text">Vibrant Veggie Burgers</div>
-								<div class="main-dish-text">with Curry Mayo & Fries</div>
-								<div class="info-button-container">
-									<div class="dish-button">В корзину</div>
-									<div class="info-button-text-container">
-										<div class="info-dish-amount-text">215 г</div>
-										<div class="info-dish-price-text">349 ₽</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
+					<% } %>
 				</div>
 			</div>
 
@@ -145,7 +80,7 @@
 
 		<script src="/scripts/jquery.js"></script>
 		<script src="/scripts/index.js"></script>
-		<script>
+		<!-- <script>
 			document.querySelector('.dish-button').addEventListener('click', function(event) {
 				event.stopPropagation();
 				event.preventDefault();
@@ -154,6 +89,6 @@
 			document.querySelector('.box-link').addEventListener('click', function(event) {
 				event.preventDefault();
 			});
-		</script>
+		</script> -->
 	</body>
 </html>
