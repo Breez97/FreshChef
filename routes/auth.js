@@ -20,7 +20,7 @@ router.post('/login', urlParser, (req, res) => {
 
 		if (result.length === 0) {
 			return res.status(301).render('authentification', {
-				form: auth,
+				form: 'auth',
 				email: email,
 				message: 'Пользователь с такой почтой не зарегистрирован'
 			});
@@ -33,7 +33,7 @@ router.post('/login', urlParser, (req, res) => {
 
 			if (result.length === 0) {
 				return res.status(301).render('authentification', {
-					form: auth,
+					form: 'auth',
 					email: email,
 					message: 'Неверный пароль'
 				});
@@ -53,11 +53,11 @@ router.post('/reg', urlParser, (req, res) => {
 	connection.query(`SELECT * FROM users WHERE email=?`, [email], (error, result) => {
 		if (error) {
 			return res.status(500).redirect('/');
-		} 
+		}
 
 		if (result.length > 0) {
 			return res.status(301).render('authentification', {
-				form: reg,
+				form: 'reg',
 				email: email,
 				message: 'Пользователь с такой почтой уже существует'
 			});

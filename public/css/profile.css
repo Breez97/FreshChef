@@ -1,0 +1,98 @@
+.content-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	min-height: 500px;
+}
+
+.header-text-info {
+	font-family: 'Montserrat-Bold';
+	font-size: 20px;
+}
+
+.info-form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	width: 800px;
+	border-radius: 10px;
+	border: 5px solid rgb(111, 206, 149);
+	padding: 10px;
+	min-height: 300px;
+	margin: 10px;
+	
+}
+
+.info-logo {
+	width: 150px;
+	height: 150px;
+	margin: 20px;
+}
+
+.info-input-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	width: 550px;
+	padding: 20px;
+	margin: 5px;
+}
+
+.save-form input[type="text"], .save-form input[type="password"], .save-form button[type="submit"] {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 250px;
+    box-sizing: border-box;
+	font-family: 'Montserrat-Medium';
+	font-size: 16px;
+}
+
+.save-form button[type="submit"] {
+    background-color: rgb(40, 167, 69);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+	transition: .4s;
+}
+
+.save-form button[type="submit"]:disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+}
+
+.save-form button[type="submit"]:not(:disabled):hover {
+	transition: .4s;
+    background-color: #218838;
+}
+
+.buttons-container {
+	margin: 10px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-around;
+	width: 400px;
+}
+
+.button-profile, .button-orders {
+	font-family: 'Montserrat-Bold';
+	font-size: 20px;
+}
+
+.info-message {
+	font-family: 'Montserrat-Regular';
+	font-size: 14px;
+	color: red;
+	margin: 10px;
+	text-align: center;
+}
+
+.form-hidden {
+	display: none;
+}

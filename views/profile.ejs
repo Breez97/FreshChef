@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="icon" type="image/x-icon" href="/icon/icon.ico">
+		<link rel="stylesheet" href="/css/fonts.css">
+		<link rel="stylesheet" href="/css/main.css">
+		<link rel="stylesheet" href="/css/header.css">
+		<link rel="stylesheet" href="/css/footer.css">
+		<link rel="stylesheet" href="/css/profile.css">
+		<title>Профиль</title>
+	</head>
+	<body>
+
+		<% if (typeof user !== 'undefined' && user) { %>
+			<p>Добро пожаловать, <%= user.name %>!</p>
+		<% } else { %>
+			<p>Пожалуйста, войдите в свой аккаунт</p>
+		<% } %>
+
+		<%- include('./common/header.ejs') %>
+
+		<div class="content-container">
+			<div class="info-form">
+				<div class="buttons-container">
+					<a class="button-profile selected">Профиль</a>
+					<a class="button-orders">Заказы</a>
+				</div>
+				<img src="/img/content/logo.svg" class="info-logo">
+				<div class="header-text-info">Добро пожаловать в личный кабинет</div>
+
+				<form class="save-form" method="POST" action="/save">
+					<div class="info-input-container">
+						<input type="hidden" name="id" value="<%= (typeof user !== 'undefined' && user) ? user.id : '' %>">
+						<input type="text" name="name" placeholder="Имя Фамилия" value="<%= (typeof user !== 'undefined' && user) ? user.name : '' %>">
+						<input type="text" name="email" placeholder="Email" value="<%= (typeof user !== 'undefined' && user) ? user.email : '' %>">
+						<input type="password" name="password" placeholder="Пароль">
+						<% if (typeof message !== 'undefined' && message) { %>
+							<div class="info-message"><%= message %></div>
+						<% } %>
+						<button type="submit" disabled>Сохранить</button>
+					</div>
+				</form>
+
+				<div class="orders-container form-hidden">
+					<!-- Заказы будут здесь -->
+				</div>
+			</div>
+		</div>
+
+		<%- include('./common/footer.ejs') %>
+
+		<script src="/scripts/jquery.js"></script>
+		<script src="/scripts/profile.js"></script>
+
+	</body>
+</html>

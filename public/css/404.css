@@ -1,0 +1,13 @@
+.content-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	height: 100px;
+	padding: 200px;
+}
+
+.header-error-text {
+	font-family: 'Montserrat-Bold';
+	font-size: 40px;
+}

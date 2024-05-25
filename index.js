@@ -29,4 +29,15 @@ app.get('/', (req, res) => {
 const authRoutes = require('./routes/auth.js');
 app.use(authRoutes);
 
+const profileRoutes = require('./routes/profile.js')
+app.use(profileRoutes);
+
+app.get('/*', function(req, res) {
+	if (req.session.user) {
+		res.status(404).render('404', { user: req.session.user });
+	} else {
+		res.status(404).render('404', { user: null });
+	}
+});
+
 app.listen(3000);

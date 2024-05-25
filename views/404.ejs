@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="icon" type="image/x-icon" href="/icon/icon.ico">
+		<link rel="stylesheet" href="/css/fonts.css">
+		<link rel="stylesheet" href="/css/main.css">
+		<link rel="stylesheet" href="/css/header.css">
+		<link rel="stylesheet" href="/css/footer.css">
+		<link rel="stylesheet" href="/css/404.css">
+		<title>Ошибка 404</title>
+	</head>
+	<body>
+		<%- include('./common/header.ejs') %>
+
+		<div class="content-container">
+			<div class="header-error-text">404</div>
+			<div class="header-error-text">Страница не найдена</div>
+			<div class="header-error-text">
+				<a class="menu" href="/">Вернуться на главную</a>
+			</div>
+		</div>
+
+		<%- include('./common/footer.ejs') %>
+	</body>
+</html>
