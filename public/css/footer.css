@@ -1,0 +1,44 @@
+.footer-header-text {
+	text-align: center;
+	font-family: 'Montserrat-Medium';
+	font-size: 20px;
+	margin: 5px;
+}
+
+.footer-main-text {
+	text-align: center;
+	font-family: 'Montserrat-Regular';
+	font-size: 16px;
+	margin: 5px;
+}
+
+.footer-container {
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+	justify-content: space-around;
+	height: 200px;
+	margin-top: auto;
+	display: flex;
+	flex-direction: row;
+	padding: 10px 200px;
+}
+
+.footer-logo > img {
+	width: 150px;
+	height: 150px;
+	transition: .4s;
+}
+
+.footer-logo > img:hover{
+	filter: invert(68%) sepia(56%) saturate(342%) hue-rotate(65deg) brightness(94%) contrast(92%);
+	transition: .4s;
+}
+
+.footer-text-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	text-align: center;
+}
