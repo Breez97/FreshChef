@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="icon" type="image/x-icon" href="/icon/icon.ico">
+		<link rel="stylesheet" href="/css/fonts.css">
+		<link rel="stylesheet" href="/css/main.css">
+		<link rel="stylesheet" href="/css/header.css">
+		<link rel="stylesheet" href="/css/footer.css">
+		<link rel="stylesheet" href="/css/auth.css">
+		<title>Аутентификация</title>
+	</head>
+	<body>
+		
+		<%- include('./common/header.ejs') %>
+
+		<div class="content-container">
+			<div class="auth-container">
+				<div class="auth-reg-form">
+					<img src="/img/content/logo.svg" class="auth-logo">
+					<div class="buttons-container">
+						<a class="button-auth">Вход</a>
+						<a class="button-reg">Регистрация</a>
+					</div>
+					<input type="hidden" name="currentForm" value="<%= (typeof form !== 'undefined' && email) ? form : 'auth' %>">
+					<form class="auth-form login" method="POST" action="/login">
+						<input type="text" name="email" placeholder="Email" value="<%= (typeof email !== 'undefined' && email) ? email : '' %>">
+						<input type="password" name="password" placeholder="Пароль">
+						<% if (typeof message !== 'undefined' && message) { %>
+							<div class="info-message"><%= message %></div>
+						<% } %>
+						<button type="submit" disabled>Войти</button>
+					</form>
+					<form class="auth-form reg form-hidden" method="POST" action="/reg">
+						<input type="text" name="name" placeholder="Имя Фамилия">
+						<input type="text" name="email" placeholder="Email" value="<%= (typeof email !== 'undefined' && email) ? email : '' %>">
+						<input type="password" name="password" placeholder="Пароль (не менее 5 символов)">
+						<% if (typeof message !== 'undefined' && message) { %>
+							<div class="info-message"><%= message %></div>
+						<% } %>
+						<button type="submit" disabled>Зарегистироваться</button>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<%- include('./common/footer.ejs') %>
+
+		<script src="/scripts/jquery.js"></script>
+		<script src="/scripts/auth.js"></script>
+		
+	</body>
+</html>

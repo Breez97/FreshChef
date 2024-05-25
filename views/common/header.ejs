@@ -1,26 +1,26 @@
 <div class="header-container">
 	<div class="header-menu">
-		<a class="menu" href="#">
+		<a class="menu" href="/">
 			ГЛАВНАЯ
 		</a>
-		<a class="menu" href="#">
+		<a class="menu" href="/">
 			МЕНЮ
 		</a>
-		<a class="menu" href="#">
+		<a class="menu" href="/">
 			О НАС
 		</a>
 	</div>
-	<a class="header-logo" href="#">
+	<a class="header-logo" href="/">
 		<img src="/img/content/logo.svg">
 	</a>
 	<div class="header-menu">
-		<a class="menu" href="#">
+		<a class="menu" href="/">
 			ОТЗЫВЫ
 		</a>
-		<a class="menu" href="#">
+		<a class="menu" href="/">
 			<img class="menu-logo" src="/img/content/shopping_bag.svg">
 		</a>
-		<a class="menu" href="#">
+		<a class="menu" href="<%= (typeof user !== 'undefined' && user) ? '/account' : '/auth' %>">
 			<img class="menu-logo" src="/img/content/account.svg">
 		</a>
 	</div>

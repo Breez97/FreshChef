@@ -8,9 +8,15 @@
 		<link rel="stylesheet" href="/css/main.css">
 		<link rel="stylesheet" href="/css/header.css">
 		<link rel="stylesheet" href="/css/footer.css">
-		<title>FreshChef</title>
+		<title>Fresh Chef</title>
 	</head>
 	<body>
+
+		<% if (typeof user !== 'undefined' && user) { %>
+			<p>Добро пожаловать, <%= user.name %>!</p>
+		<% } else { %>
+			<p>Пожалуйста, войдите в свой аккаунт</p>
+		<% } %>
 		
 		<%- include('./common/header.ejs') %>
 

@@ -1,23 +1,23 @@
 <div class="thin-line top-line"></div>
 <div class="footer-container">
-	<a class="footer-logo" href="#">
+	<a class="footer-logo" href="/">
 		<img src="/img/content/logo.svg">
 	</a>
 	<div class="footer-navigation-container">
 		<div class="footer-header-text">НАВИГАЦИЯ</div>
 		<div class="footer-text-container">
-			<a class="footer-main-text" href="#">ГЛАВНАЯ</a>
-			<a class="footer-main-text" href="#">МЕНЮ</a>
-			<a class="footer-main-text" href="#">О НАС</a>
-			<a class="footer-main-text" href="#">ОТЗЫВЫ</a>
-			<a class="footer-main-text" href="#">ПРОФИЛЬ</a>
+			<a class="footer-main-text" href="/">ГЛАВНАЯ</a>
+			<a class="footer-main-text" href="/">МЕНЮ</a>
+			<a class="footer-main-text" href="/">О НАС</a>
+			<a class="footer-main-text" href="/">ОТЗЫВЫ</a>
+			<a class="footer-main-text" href="<%= (typeof user !== 'undefined' && user) ? '/account' : '/auth' %>">ПРОФИЛЬ</a>
 		</div>
 	</div>
 	<div class="footer-navigation-container">
 		<div class="footer-header-text">СВЯЗЬ С НАМИ</div>
 		<div class="footer-text-container">
-			<div class="footer-main-text" href="#">✉ support@freshchef.ru ✉</div>
-			<div class="footer-main-text" href="#">🕿 +7 (916) 844-65-90 🕿</div>
+			<div class="footer-main-text">✉ support@freshchef.ru ✉</div>
+			<div class="footer-main-text">🕿 +7 (916) 844-65-90 🕿</div>
 		</div>
 	</div>
 </div>
