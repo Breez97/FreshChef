@@ -20,7 +20,7 @@ app.use(session({
 }));
 
 app.get('/', (req, res) => {
-	connection.query(`SELECT * FROM dishes ORDER BY amount_of_time_ordered LIMIT 3`, (error, result) => {
+	connection.query(`SELECT * FROM dishes ORDER BY total_quantity LIMIT 3`, (error, result) => {
 		if (error) {
 			return res.status(500).redirect('/');
 		}
@@ -47,6 +47,9 @@ app.use(profileRoutes);
 
 const menuRoutes = require('./routes/menu.js');
 app.use(menuRoutes);
+
+const infoRoutes = require('./routes/info.js');
+app.use(infoRoutes);
 
 app.get('/*', function(req, res) {
 	if (req.session.user) {
