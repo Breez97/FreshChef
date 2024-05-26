@@ -11,6 +11,7 @@ const app = express();
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.json());
 
 app.use(session({
 	secret: 'secret_key',
@@ -19,31 +20,23 @@ app.use(session({
 }));
 
 app.get('/', (req, res) => {
-	if (req.session.user) {
-		connection.query(`SELECT * FROM dishes ORDER BY amount_of_time_ordered LIMIT 3`, (error, result) => {
-			if (error) {
-				return res.status(500).redirect('/');
-			}
+	connection.query(`SELECT * FROM dishes ORDER BY amount_of_time_ordered LIMIT 3`, (error, result) => {
+		if (error) {
+			return res.status(500).redirect('/');
+		}
 
+		if (req.session.user) {
 			return res.status(200).contentType('text/html').render('index', { 
 				user: req.session.user,
 				dishes: result,
 			});
-
-		});
-	} else {
-		connection.query(`SELECT * FROM dishes ORDER BY amount_of_time_ordered LIMIT 3`, (error, result) => {
-			if (error) {
-				return res.status(500).redirect('/');
-			}
-
+		} else {
 			return res.status(200).contentType('text/html').render('index', { 
 				user: null,
 				dishes: result,
 			});
-
-		});
-	}
+		}
+	});
 });
 
 const authRoutes = require('./routes/auth.js');
@@ -51,6 +44,9 @@ app.use(authRoutes);
 
 const profileRoutes = require('./routes/profile.js')
 app.use(profileRoutes);
+
+const menuRoutes = require('./routes/menu.js');
+app.use(menuRoutes);
 
 app.get('/*', function(req, res) {
 	if (req.session.user) {

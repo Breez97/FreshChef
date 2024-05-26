@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="icon" type="image/x-icon" href="/icon/icon.ico">
+		<link rel="stylesheet" href="/css/fonts.css">
+		<link rel="stylesheet" href="/css/main.css">
+		<link rel="stylesheet" href="/css/header.css">
+		<link rel="stylesheet" href="/css/footer.css">
+		<link rel="stylesheet" href="/css/menu.css">
+		<title>Fresh Chef</title>
+	</head>
+	<body>
+
+	<% if (typeof user !== 'undefined' && user) { %>
+		<p>Добро пожаловать, <%= user.name %>!</p>
+	<% } else { %>
+		<p>Пожалуйста, войдите в свой аккаунт</p>
+	<% } %>
+
+	<%- include('./common/header.ejs') %>
+
+	<div class="content-container">
+		<div class="header-header-text">Наше меню</div>
+		<% for (var i = 0; i < dishes.length; i++) { %>
+			<% if (i % 3 === 0) { %>
+				<% if (i !== 0) { %></div><% } %>
+				<div class="dish-box-container">
+			<% } %>
+			<div class="box-link">
+				<div class="dish-box">
+					<input type="hidden" value="<%= dishes[i].id %>">
+					<img src="<%= dishes[i].img %>">
+					<div class="dish-box-description">
+						<div class="header-dish-text"><%= dishes[i].title %></div>
+						<div class="main-dish-text"><%= dishes[i].short_description %></div>
+						<div class="info-text-container">
+							<div class="info-dish-amount-text"><%= dishes[i].amount %> г</div>
+							<div class="info-dish-price-text"><%= dishes[i].price %> ₽</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<% if (i === dishes.length - 1) { %></div><% } %> 
+		<% } %>
+	</div>
+
+	<%- include('./common/footer.ejs') %>
+
+	<script src="/scripts/jquery.js"></script>
+	<script src="/scripts/index.js"></script>
+	</body>
+</html>

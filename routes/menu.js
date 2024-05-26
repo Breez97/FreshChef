@@ -6,20 +6,23 @@ const urlParser = bodyParser.urlencoded({ extended: false });
 const connection = require('../database/database_connection.js');
 
 router.get('/menu', (req, res) => {
-	if (req.session.user) {
-		connection.query(`SELECT * FROM users WHERE id=?`, [req.session.user.id], (error, result) => {
-			if (error) {
-				return res.status(500).redirect('/');
-			}
+	connection.query(`SELECT * FROM dishes`, (error, result) => {
+		if (error) {
+			return res.status(500).redirect('/');
+		}
 
-			return res.status(200).contentType('text/html').render('profile', { 
+		if (req.session.user) {
+			return res.status(200).contentType('text/html').render('menu', { 
 				user: req.session.user,
-				currentUser: result[0]
+				dishes: result,
 			});
-		});
-	} else {
-		return res.status(200).contentType('text/html').render('profile', { user: null });
-	}
+		} else {
+			return res.status(200).contentType('text/html').render('menu', { 
+				user: null,
+				dishes: result,
+			});
+		}
+	});
 });
 
 module.exports = router;

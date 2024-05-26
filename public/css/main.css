@@ -186,7 +186,7 @@ body {
 
 .dish-box {
 	width: 400px;
-	height: 330px;
+	height: 300px;
 	display: flex;
     flex-direction: column;
 	border-radius: 10px;
@@ -214,7 +214,19 @@ body {
 	padding: 10px;
 }
 
-.dish-button {
+.info-text-container {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	width: 70%;
+	margin: 10px;
+
+}
+
+/* Неиспользуемые кнопки */
+
+.dish-button, .dish-button-go-to-auth {
 	font-family: 'Montserrat-Medium';
 	font-size: 16px;
     display: inline-block;
@@ -230,12 +242,12 @@ body {
 	transition: .4s;
 }
 
-.dish-button:hover {
+.dish-button:hover, .dish-button-go-to-auth:hover {
 	transition: .4s;
     background-color: rgb(33, 136, 56);
 }
 
-.dish-button:active {
+.dish-button:active, .dish-button-go-to-auth:active {
 	transition: .4s;
     background-color: rgb(24, 101, 41);
 }
@@ -249,11 +261,6 @@ body {
 	width: 90%;
 }
 
-.info-button-text-container {
-	display: flex;
-	flex-direction: column;
-	align-items: flex-end;
-}
 
 .quantity-button {
     display: flex;

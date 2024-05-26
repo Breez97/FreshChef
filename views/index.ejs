@@ -31,7 +31,7 @@
 						Откройте дверь к новым вкусам!<br>Заказывайте кулинарные шедевры, получайте их быстро и легко прямо к вашему столу, и наслаждайтесь великолепными вкусами вместе с нами!
 					</div>
 					<div>
-						<a class="button-link" href="#">Посмотреть меню</a>
+						<a class="button-link" href="/menu">Посмотреть меню</a>
 					</div>
 				</div>
 			</div>
@@ -55,17 +55,9 @@
 							<div class="dish-box-description">
 								<div class="header-dish-text"><%=dishes[i].title%></div>
 								<div class="main-dish-text"><%=dishes[i].short_description%></div>
-								<div class="info-button-container">
-									<div class="dish-button">В корзину</div>
-									<div class="quantity-button button-hidden">
-										<div class="button-section decrement">-</div>
-										<div class="button-section quantity">1</div>
-										<div class="button-section increment">+</div>
-									</div>
-									<div class="info-button-text-container">
-										<div class="info-dish-amount-text"><%=dishes[i].amount%> г</div>
-										<div class="info-dish-price-text"><%=dishes[i].price%> ₽</div>
-									</div>
+								<div class="info-text-container">
+									<div class="info-dish-amount-text"><%=dishes[i].amount%> г</div>
+									<div class="info-dish-price-text"><%=dishes[i].price%> ₽</div>
 								</div>
 							</div>
 						</div>
@@ -80,15 +72,5 @@
 
 		<script src="/scripts/jquery.js"></script>
 		<script src="/scripts/index.js"></script>
-		<!-- <script>
-			document.querySelector('.dish-button').addEventListener('click', function(event) {
-				event.stopPropagation();
-				event.preventDefault();
-			});
-	
-			document.querySelector('.box-link').addEventListener('click', function(event) {
-				event.preventDefault();
-			});
-		</script> -->
 	</body>
 </html>
