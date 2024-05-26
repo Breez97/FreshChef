@@ -22,7 +22,22 @@
 	<%- include('./common/header.ejs') %>
 
 	<div class="content-container">
-		<div class="header-header-text">Наше меню</div>
+		<div class="label-sort-container">
+			<div class="header-text">Наше меню</div>
+			<!-- <div class="sorting-panel">
+				<label class="main-text" for="sort-select">Сортировка по цене:</label>
+				<select id="sort-select">
+					<option value="default">Сортировка</option>
+					<option value="desc">По убыванию цены</option>
+					<option value="asc">По возрастанию цены</option>
+				</select>
+			</div> -->
+			<div class="search-panel">
+				<input type="text" id="search-input" placeholder="Поиск по названию">
+				<button id="show-all-button">Отобразить все</button>
+			</div>
+		</div>
+		<div class="header-text error-text"></div>
 		<% for (var i = 0; i < dishes.length; i++) { %>
 			<% if (i % 3 === 0) { %>
 				<% if (i !== 0) { %></div><% } %>
@@ -49,6 +64,6 @@
 	<%- include('./common/footer.ejs') %>
 
 	<script src="/scripts/jquery.js"></script>
-	<script src="/scripts/index.js"></script>
+	<script src="/scripts/menu.js"></script>
 	</body>
 </html>

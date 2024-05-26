@@ -1,11 +1,11 @@
 $(document).ready(function() {
 	function checkFields(fieldName) {
-		const email = $(`form.${fieldName} input[name="email"]`).val();
-		const password = $(`form.${fieldName} input[name="password"]`).val();
+		let email = $(`form.${fieldName} input[name="email"]`).val();
+		let password = $(`form.${fieldName} input[name="password"]`).val();
 		let isDisabled;
 
 		if (fieldName === 'save-form') {
-			const name = $(`form.${fieldName} input[name="name"]`).val();
+			let name = $(`form.${fieldName} input[name="name"]`).val();
 			isDisabled = email.trim() === '' || password.trim() === '' || password.trim().length < 5 || name.trim() === '';
 		} else {
 			isDisabled = email.trim() === '' || password.trim() === '';

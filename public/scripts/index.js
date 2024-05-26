@@ -1,6 +1,6 @@
 $(document).ready(() => {
 	$('.box-link').on('click', function(event) {
-		var id = $(this).find('input[type="hidden"]').val();
+		let id = $(this).find('input[type="hidden"]').val();
 
         $.ajax({
             type: 'POST',
