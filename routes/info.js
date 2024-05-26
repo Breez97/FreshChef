@@ -29,7 +29,6 @@ router.post('/getInfo', urlParser, (req, res) => {
 
 router.get('/info', (req, res) => {
 	const info = req.session.info || [];
-	console.log(info);
 
 	if (req.session.user) {
 		return res.status(200).contentType('text/html').render('info', { 

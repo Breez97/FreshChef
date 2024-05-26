@@ -16,7 +16,34 @@
 		<%- include('./common/header.ejs') %>
 
 		<div class="content-container">
-			
+			<div class="dish-info-container">
+				<div class="img-button-container">
+					<div class="header-text"><%= info[0].title %></div>
+					<img src="<%= info[0].img %>" class="dish-image">
+					<div class="dish-button">Добавить в корзину</div>
+				</div>
+				<div class="info-container">
+					<div class="main-text"><%= info[0].description %></div>
+					<div class="info-table">
+						<div class="info-row">
+							<div class="info-label main-text">Калории:</div>
+							<div class="info-value main-text"><%= info[0].calories %></div>
+						</div>
+						<div class="info-row">
+							<div class="info-label main-text">Жиры:</div>
+							<div class="info-value main-text"><%= info[0].fat %>g</div>
+						</div>
+						<div class="info-row">
+							<div class="info-label main-text">Углеводы:</div>
+							<div class="info-value main-text"><%= info[0].carbohydrates %>g</div>
+						</div>
+						<div class="info-row">
+							<div class="info-label main-text">Белки:</div>
+							<div class="info-value main-text"><%= info[0].protein %>g</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 
 		<%- include('./common/footer.ejs') %>
