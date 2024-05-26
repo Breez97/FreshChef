@@ -51,6 +51,16 @@ app.use(menuRoutes);
 const infoRoutes = require('./routes/info.js');
 app.use(infoRoutes);
 
+app.post('/logout', (req, res) => {
+	req.session.destroy((err) => {
+		if (err) {
+			return res.status(500);
+		}
+		res.clearCookie('connect.sid');
+		return res.status(200).send('Вы успешно вышли из системы.');
+	});
+});
+
 app.get('/*', function(req, res) {
 	if (req.session.user) {
 		return res.status(404).render('404', { user: req.session.user });

@@ -47,4 +47,19 @@ $(document).ready(function() {
 			$('div.orders-container').removeClass('form-hidden');
 		}
 	});
+
+	$(document).ready(function() {
+		$('.logout-button').on('click', function() {
+			$.ajax({
+				method: 'POST',
+				url: '/logout',
+				success: function() {
+					window.location.href = '/auth';
+				},
+				error: function() {
+					alert('Ошибка при выходе из системы. Пожалуйста, попробуйте еще раз.');
+				}
+			});
+		});
+	});
 });

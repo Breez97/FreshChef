@@ -96,3 +96,29 @@
 .form-hidden {
 	display: none;
 }
+
+.dish-button {
+	font-family: 'Montserrat-Medium';
+	font-size: 16px;
+    display: inline-block;
+    padding: 10px 60px;
+    color: white;
+    background-color: rgb(40, 167, 69);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+	transition: .4s;
+	width: 200px;
+}
+
+.dish-button:hover {
+	transition: .4s;
+    background-color: rgb(33, 136, 56);
+}
+
+.dish-button:active {
+	transition: .4s;
+    background-color: rgb(24, 101, 41);
+}
