@@ -99,3 +99,19 @@
 	transition: .4s;
     background-color: rgb(24, 101, 41);
 }
+
+.remove-button {
+    background-color: rgb(119, 119, 119);
+}
+
+.remove-button:hover {
+    background-color: rgb(74, 74, 74);
+}
+
+.remove-button:active {
+    background-color: rgb(50, 50, 50);
+}
+
+.button-hidden {
+    display: none;
+}

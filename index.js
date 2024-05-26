@@ -51,9 +51,12 @@ app.use(menuRoutes);
 const infoRoutes = require('./routes/info.js');
 app.use(infoRoutes);
 
+const shoppingBagRoutes = require('./routes/shopping_bag.js');
+app.use(shoppingBagRoutes);
+
 app.post('/logout', (req, res) => {
-	req.session.destroy((err) => {
-		if (err) {
+	req.session.destroy((error) => {
+		if (error) {
 			return res.status(500);
 		}
 		res.clearCookie('connect.sid');

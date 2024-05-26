@@ -9,15 +9,9 @@
 		<link rel="stylesheet" href="/css/header.css">
 		<link rel="stylesheet" href="/css/footer.css">
 		<link rel="stylesheet" href="/css/menu.css">
-		<title>Fresh Chef</title>
+		<title>Меню</title>
 	</head>
 	<body>
-
-	<% if (typeof user !== 'undefined' && user) { %>
-		<p>Добро пожаловать, <%= user.name %>!</p>
-	<% } else { %>
-		<p>Пожалуйста, войдите в свой аккаунт</p>
-	<% } %>
 
 	<%- include('./common/header.ejs') %>
 

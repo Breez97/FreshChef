@@ -63,7 +63,7 @@ router.post('/reg', urlParser, (req, res) => {
 			});
 		}
 
-		connection.query(`INSERT INTO users (id, is_admin, name, email, password) VALUES(NULL, 0, ?, ?, ?)`, [name, email, password], (error, result) => {
+		connection.query(`INSERT INTO users (id, is_admin, name, email, password, number_current_order) VALUES(NULL, 0, ?, ?, ?, 1)`, [name, email, password], (error, result) => {
 			if (error) {
 				return res.status(500).redirect('/');
 			}

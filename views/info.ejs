@@ -17,10 +17,19 @@
 
 		<div class="content-container">
 			<div class="dish-info-container">
+				<input type="hidden" value="<%= info[0].id %>">
 				<div class="img-button-container">
 					<div class="header-text"><%= info[0].title %></div>
 					<img src="<%= info[0].img %>" class="dish-image">
-					<div class="dish-button">Добавить в корзину</div>
+					<% if (user) { %>
+						<% if (isAdded) { %>
+							<div class="dish-button remove-button">Убрать из корзины</div>
+						<% } else { %>
+							<div class="dish-button add-button">Добавить в корзину</div>
+						<% } %>
+					<% } else { %>
+						<div class="dish-button auth-button">Добавить в корзину</div>
+					<% } %>
 				</div>
 				<div class="info-container">
 					<div class="main-text"><%= info[0].description %></div>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="icon" type="image/x-icon" href="/icon/icon.ico">
+		<link rel="stylesheet" href="/css/fonts.css">
+		<link rel="stylesheet" href="/css/main.css">
+		<link rel="stylesheet" href="/css/header.css">
+		<link rel="stylesheet" href="/css/footer.css">
+		<link rel="stylesheet" href="/css/info.css">
+		<link rel="stylesheet" href="/css/shopping_bag.css">
+		<title>Корзина покупок</title>
+	</head>
+	<body>
+		<%- include('./common/header.ejs') %>
+
+		<div class="content-container">
+			<div class="header-text">Корзина покупок</div>
+			<% if (orders.length > 0) { %>
+				<div class="orders-list">
+					<% orders.forEach(order => { %>
+						<div class="order-item" data-price="<%= order.price %>" data-quantity="<%= order.quantity %>">
+							<img src="<%= order.img %>" alt="<%= order.title %>">
+							<div class="order-details">
+								<input type="hidden" value="<%= order.id_dish %>">
+								<div class="header-text"><%= order.title %></div>
+								<div class="main-text"><%= order.short_description %></div>
+								<div class="main-text">Цена: <%= order.price %> ₽</div>
+								<div class="main-text" name="quantity">Количество: <%= order.quantity %></div>
+								<div class="info-button-container">
+									<div class="quantity-button">
+										<div class="button-section decrement">-</div>
+										<input type="text" class="quantity" value="<%= order.quantity %>" readonly>
+										<div class="button-section increment">+</div>
+									</div>
+									<div class="dish-button remove-button">Убрать из корзины</div>
+								</div>
+							</div>
+						</div>
+					<% }); %>
+				</div>
+				<div class="summary">
+					<div class="main-text" id="total-price">Итоговая стоимость: ₽</div>
+					<div class="dish-button" id="checkout-button">Оформить заказ</div>
+				</div>
+			<% } else { %>
+				<div class="header-text">Ваша корзина пуста</div>
+			<% } %>
+		</div>
+
+		<div id="successModal" class="modal">
+			<div class="modal-content">
+				<span class="close">&times;</span>
+				<p>Заказ успешно оплачен!</p>
+			</div>
+		</div>
+
+		<%- include('./common/footer.ejs') %>
+
+		<script src="/scripts/jquery.js"></script>
+		<script src="/scripts/shopping_bag.js"></script>
+	</body>
+</html>
