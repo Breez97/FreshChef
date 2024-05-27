@@ -7,7 +7,7 @@ $(document).ready(function() {
 		$(this).closest('.modal').css('display', 'none');
 	});
 
-	function checkFormFields() {
+	function checkFormFieldsAdd() {
 		let isFormValid = true;
 
 		$('.add-form input[type="text"], .add-form textarea').each(function() {
@@ -26,11 +26,35 @@ $(document).ready(function() {
 		return isFormValid;
 	}
 
+	function checkFormFieldsUpdate() {
+		let isFormValid = true;
+
+		$('.update-form input[type="text"], .update-form textarea').each(function() {
+			if ($(this).val().trim() === '') {
+				isFormValid = false;
+			}
+		});
+		$('.update-form input[type="number"]').each(function() {
+			if ($(this).val().trim() === '' || parseFloat($(this).val()) <= 0) {
+				isFormValid = false;
+			}
+		});
+		return isFormValid;
+	}
+
 	$('.add-form input, .add-form textarea, .add-form input[type="file"]').on('input change', function() {
-		if (checkFormFields()) {
+		if (checkFormFieldsAdd()) {
 			$('.form-button-add').prop('disabled', false);
 		} else {
 			$('.form-button-add').prop('disabled', true);
+		}
+	});
+
+	$('.update-form input, .update-form textarea').on('input change', function() {
+		if (checkFormFieldsUpdate()) {
+			$('.form-button-update').prop('disabled', false);
+		} else {
+			$('.form-button-update').prop('disabled', true);
 		}
 	});
 
@@ -101,10 +125,83 @@ $(document).ready(function() {
 				}
 			},
 			error: function(response) {
-				alert('Ошибка');
                 $('#messageContent').text('Произошла ошибка. Попробуйте снова.');
                 $('#messageModal').css('display', 'flex');
             }
+		});
+	});
+
+	$('.content-container').on('click', 'a[name="update-button"]', function() {
+		const dishContainer = $(this).closest('.dish-info-container');
+		const dishId = dishContainer.find('input[name="dishId"]').val();
+		const dishTitle = dishContainer.find('.header-title-text').text();
+		const shortDescription = dishContainer.find('.card-text-info-description').text();
+		const imgSrc = dishContainer.find('.image-container img').attr('src');
+		const calories = dishContainer.find('.card-text-info:eq(1)').text().replace('g', '');
+		const protein = dishContainer.find('.card-text-info:eq(3)').text().replace('g', '');
+		const fat = dishContainer.find('.card-text-info:eq(5)').text().replace('g', '');
+		const carbohydrates = dishContainer.find('.card-text-info:eq(7)').text().replace('g', '');
+		const amount = dishContainer.find('.additional-info .card-text-info:eq(0)').text().replace('Количество: ', '').replace('g', '');
+		const price = dishContainer.find('.additional-info .card-text-info:eq(1)').text().replace('Цена: ', '').replace(' ₽', '');
+
+		$('#updateDishModal input[name="dish-id"]').val(dishId);
+		$('#updateDishModal input[name="update-title"]').val(dishTitle);
+		$('#updateDishModal input[name="update-short-description"]').val(shortDescription);
+		$('#updateDishModal input[name="update-amount"]').val(amount);
+		$('#updateDishModal input[name="update-price"]').val(price);
+		$('#updateDishModal textarea[name="update-description"]').val(shortDescription);
+		$('#updateDishModal input[name="update-calories"]').val(calories);
+		$('#updateDishModal input[name="update-fat"]').val(fat);
+		$('#updateDishModal input[name="update-carbohydrates"]').val(carbohydrates);
+		$('#updateDishModal input[name="update-protein"]').val(protein);
+		$('#updateDishModal input[name="old-image"]').val(imgSrc);
+
+		$('#updateDishModal').css('display', 'flex');
+    });
+
+	$('.update-form').on('submit', function(e) {
+		e.preventDefault();
+		
+		let formData = new FormData(this);
+	
+		const newImgFile = $('#updateDishModal input[name="update-image"]')[0].files[0];
+		const oldImgPath = $('#updateDishModal input[name="old-image"]').val();
+	
+		formData.append('old-image-path', oldImgPath);
+	
+		$.ajax({
+			url: '/updateDish',
+			type: 'POST',
+			data: formData,
+			contentType: false,
+			processData: false,
+			success: function(response) {
+				if (response.success) {
+					$('#updateDishModal').css('display', 'none');
+					$('#messageContent').text(response.message);
+					$('#messageModal').css('display', 'flex');
+					const updatedDish = response.dish;
+					const dishContainer = $(`input[name="dishId"][value="${updatedDish.id}"]`).closest('.dish-info-container');
+					dishContainer.find('.header-title-text').text(updatedDish.title);
+					dishContainer.find('.card-text-info-description').text(updatedDish.description);
+					if (response.isImageChanged) {
+						dishContainer.find('.image-container img').attr('src', updatedDish.img);
+					}
+					dishContainer.find('.card-text-info:eq(1)').text(`${updatedDish.calories}g`);
+					dishContainer.find('.card-text-info:eq(3)').text(`${updatedDish.protein}g`);
+					dishContainer.find('.card-text-info:eq(5)').text(`${updatedDish.fat}g`);
+					dishContainer.find('.card-text-info:eq(7)').text(`${updatedDish.carbohydrates}g`);
+					dishContainer.find('.additional-info .card-text-info:eq(0)').text(`Количество: ${updatedDish.amount}g`);
+					dishContainer.find('.additional-info .card-text-info:eq(1)').text(`Цена: ${updatedDish.price} ₽`);
+				} else {
+					$('#messageContent').text(response.message);
+					$('#messageModal').css('display', 'flex');
+				}
+			},
+			error: function(response) {
+				$('#messageContent').text('Произошла ошибка. Попробуйте снова.');
+				$('#messageModal').css('display', 'flex');
+			}
 		});
 	});
 });

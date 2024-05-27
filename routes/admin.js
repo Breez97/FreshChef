@@ -40,15 +40,29 @@ router.get('/dishesDb', (req, res) => {
 });
 
 const storage = multer.diskStorage({
-	destination: function (req, file, cb) {
-		cb(null, path.join(__dirname, '..', 'public', 'img', 'dishes'));
-	},
-	filename: function (req, file, cb) {
-		cb(null, Date.now() + '-' + file.originalname);
-	}
+    destination: function (req, file, cb) {
+        cb(null, 'public/img/dishes');
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.originalname);
+    }
 });
 
-const upload = multer({ storage: storage });
+const fileFilter = (req, file, cb) => {
+	const allowedTypes = /jpeg|jpg|png|gif/;
+	const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
+	const mimetype = allowedTypes.test(file.mimetype);
+	if (extname && mimetype) {
+		return cb(null, true);
+	} else {
+		cb(new Error('Error: Images Only!'));
+	}
+};
+
+const upload = multer({
+	storage: storage,
+	fileFilter: fileFilter
+});
 
 router.post('/addDish', upload.single('new-image'), (req, res) => {
 	const {
@@ -98,24 +112,97 @@ router.post('/addDish', upload.single('new-image'), (req, res) => {
 						return res.status(200).send({
 							message: `Блюдо ${title} было успешно добавлено`,
 							dish: {
-                                id: dishId,
-                                title,
-                                shortDescription,
-                                img: imgPath,
-                                amount,
-                                price,
-                                description,
-                                calories,
-                                fat,
-                                carbohydrates,
-                                protein
-                            }
+								id: dishId,
+								title,
+								shortDescription,
+								img: imgPath,
+								amount,
+								price,
+								description,
+								calories,
+								fat,
+								carbohydrates,
+								protein
+							}
 						});
 					});
 				})
 			})
 		}
 	});
+});
+
+router.post('/updateDish', upload.single('update-image'), (req, res) => {
+	const {
+		'dish-id': dishId,
+		'update-title': title,
+		'update-short-description': shortDescription,
+		'update-amount': amount,
+		'update-price': price,
+		'update-description': description,
+		'update-calories': calories,
+		'update-fat': fat,
+		'update-carbohydrates': carbohydrates,
+		'update-protein': protein,
+		'old-image-path': oldImgPath
+	} = req.body;
+
+	let imgPath = oldImgPath;
+
+	if (req.file) {
+		imgPath = `/img/dishes/${req.file.filename}`;
+	}
+
+	connection.query(`SELECT * FROM dishes WHERE title=? AND id!=?`, [title, dishId], (error, result) => {
+		if (error) {
+			return res.status(500).send({
+				success: false,
+				message: 'DatabaseError'
+			});
+		}
+		if(result.length > 0) {
+			return res.status(200).send({
+				success: false,
+				message: 'Такое блюдо уже есть в базе данных'
+			});
+		}
+		connection.query(`UPDATE dishes SET title=?, short_description=?, img=?, amount=?, price=? WHERE id=?`, 
+		[title, shortDescription, imgPath, amount, price, dishId], (error, result) => {
+		if (error) {
+			return res.status(500).send({
+				success: false,
+				message: 'DatabaseError'
+			});
+		}
+		connection.query(`UPDATE dish_info SET description=?, calories=?, fat=?, carbohydrates=?, protein=? WHERE id_dish=?`, 
+			[description, calories, fat, carbohydrates, protein, dishId], (error, result) => {
+			if (error) {
+				return res.status(500).send({
+					success: false,
+					message: 'DatabaseError'
+				});
+			}
+			return res.status(200).send({
+				success: true,
+				message: `Блюдо ${title} было успешно обновлено`,
+				dish: {
+					id: dishId,
+					title,
+					shortDescription,
+					img: imgPath,
+					amount,
+					price,
+					description,
+					calories,
+					fat,
+					carbohydrates,
+					protein
+				},
+				isImageChanged: !!req.file
+			});
+		});
+	});
+	})
 });
 
 module.exports = router;
