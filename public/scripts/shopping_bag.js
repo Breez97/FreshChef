@@ -36,18 +36,28 @@ $(document).ready(function() {
     });
 
     $('.remove-button').on('click', function() {
+        let currentOrderItem = $(this).closest('.order-item');
+        let infoCurrentItem = {
+            id: currentOrderItem.find('input[type=hidden]').val()
+        }
         $(this).closest('.order-item').remove();
         checkEmptyCart();
         updateTotalPrice();
         let currentHeight = parseInt($('.content-container').css('height'));
         $('.content-container').css('height', currentHeight - 200);
+        $.ajax({
+            type: 'POST',
+            url: '/removeFromShoppingBag',
+            contentType: 'application/json',
+            data: JSON.stringify({ currentItem: infoCurrentItem })
+        });
     });
 
     $('#checkout-button').on('click', function() {
-        const orderItems = [];
+        let orderItems = [];
         
         $('.order-item').each(function() {
-            const orderItem = {
+            let orderItem = {
                 id: parseInt($(this).find('input[type=hidden]').val()),
                 price: parseInt($(this).data('price')),
                 quantity: parseInt($(this).find('.quantity').val())

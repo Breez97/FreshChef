@@ -61,9 +61,20 @@ router.post('/submitOrder', urlParser, (req, res) => {
 				return res.status(500).redirect('/');
 			}
 		});
+		return res.sendStatus(200);
 	});
+});
 
-    res.sendStatus(200);
+router.post('/removeFromShoppingBag', urlParser, (req, res) => {
+	const dishId = req.body.currentItem.id;
+	const userId = req.session.user.id;
+	
+	connection.query(`DELETE FROM orders WHERE id_user=? AND id_dish=? AND is_finished=0`, [userId, dishId], (error, result) => {
+		if (error) {
+			return res.status(500).redirect('/');
+		}
+		return res.sendStatus(200);
+	});
 });
 
 module.exports = router;
