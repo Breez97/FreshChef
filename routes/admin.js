@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
 const multer = require('multer');
-const urlParser = bodyParser.urlencoded({ extended: false });
+const urlParser = bodyParser.urlencoded({ extended: true });
 const path = require('path');
 
 const connection = require('../database/database_connection.js');
@@ -32,6 +32,22 @@ router.get('/dishesDb', (req, res) => {
 			return res.status(200).render('admin/dishesDatabase', {
 				user: req.session.user,
 				dishes: result,
+			})
+		});
+	} else {
+		return res.status(200).redirect('/logout');
+	}
+});
+
+router.get('/usersDb', (req, res) => {
+	if (req.session.user) {
+		connection.query(`SELECT * FROM users WHERE id!=?`, [req.session.user.id], (error, result) => {
+			if (error) {
+				return res.status(500).redirect('/');
+			}
+			return res.status(200).render('admin/usersDatabase', {
+				user: req.session.user,
+				users: result,
 			})
 		});
 	} else {
@@ -220,6 +236,57 @@ router.post('/admin/delete/:id', (req, res) => {
 			success: true,
 			message: 'Блюдо успешно удалено'
 		});
+	});
+});
+
+router.post('/addUser', urlParser, (req, res) => {
+	const {
+		'new-name': name,
+		'new-email': email,
+		'new-password': password,
+		'new-is-admin': admin
+	} = req.body;
+
+	connection.query('SELECT * FROM users WHERE email=?', [email], (error, result) => {
+		if (error) {
+			return res.status(500).send({ message: 'DatabaseError' });
+		}
+
+		if (result.length > 0) {
+			return res.status(200).send({ message: 'Пользователь с такой почтой уже есть в базе данных' });
+		} else { 
+			connection.query('INSERT INTO users (id, is_admin, name, email, password, number_current_order) VALUES (NULL, ?, ?, ?, ?, ?)', [admin, name, email, password, 1], (error, result) => {
+					if (error) {
+						return res.status(500).send({ message: 'DatabaseError' });
+					}
+
+					connection.query(`SELECT * FROM users WHERE name=? AND email=? AND password=?`, [name, email, password], (error, result) => {
+						if (error) {
+							return res.status(500).send({ message: 'DatabaseError' });
+						}
+
+						let userId = result[0].id;
+
+						connection.query('SELECT * FROM users WHERE id=?', [userId], (error, result) => {
+							if (error) {
+								return res.status(500).send({ message: 'DatabaseError' });
+							}
+	
+							const user = result[0];
+							return res.status(200).send({
+								message: `Новый пользователь ${name} успешно добавлен`,
+								user: {
+									id: user.id,
+									name: user.name,
+									email: user.email,
+									isAdmin: user.is_admin
+								}
+							});
+						});
+					});
+				}
+			);
+		}
 	});
 });
 

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="/css/fonts.css">
+		<link rel="stylesheet" href="/css/main.css">
+		<link rel="stylesheet" href="/css/header.css">
+		<link rel="stylesheet" href="/css/footer.css">
+		<link rel="stylesheet" href="/css/admin/usersDb.css">
+		<title>User Database</title>
+	</head>
+	<body>
+
+		<%- include('../common/header.ejs') %>
+
+		<a name="add-button" class="user-button">Добавить</a>
+
+		<div class="content-container">
+			<% if (users.length > 0) { %>
+				<% users.forEach(user => { %>
+					<div class="user-info-container">
+						<input type="hidden" name="userId" value="<%= user.id %>">
+						<div class="button-container">
+							<a href="/admin/update/<%= user.id %>" class="user-button">Изменить</a>
+							<form action="/admin/deleteUser/<%= user.id %>" method="POST" class="delete-form">
+								<button type="submit" class="user-button remove-button">Удалить</button>
+							</form>
+						</div>
+						<div class="header-title-text"><%= user.name %></div>
+						<div class="text-container">
+							<div class="user-info-label">Email:</div>
+							<div class="card-text-info"><%= user.email %></div>
+							<div class="user-info-label">Пароль:</div>
+							<div class="card-text-info"><%= user.password %></div>
+							<div class="user-info-label">Администратор:</div>
+							<div class="card-text-info"><%= user.is_admin ? 'Да' : 'Нет' %></div>
+						</div>
+					</div>
+				<% }); %>
+			<% } else { %>
+				<div class="header-text-info">База данных пользователей пуста</div>
+			<% } %>
+		</div>
+
+		<div id="addUserModal" class="modal">
+			<div class="modal-content">
+				<span class="close">&times;</span>
+				<div class="header-title-text">Добавить нового пользователя</div>
+				<form class="add-form" action="/admin/addUser" method="POST">
+					<div class="form-group">
+						<div class="card-text-title">Имя:</div>
+						<input type="text" name="new-name">
+					</div>
+					<div class="form-group">
+						<div class="card-text-title">Email:</div>
+						<input type="email" name="new-email">
+					</div>
+					<div class="form-group">
+						<div class="card-text-title">Пароль:</div>
+						<input type="password" name="new-password">
+					</div>
+					<div class="form-group">
+						<div class="card-text-title">Администратор:</div>
+						<select name="new-is-admin">
+							<option value="1">Да</option>
+							<option value="0">Нет</option>
+						</select>
+					</div>
+					<button type="submit" class="user-button form-button-add" disabled>Добавить</button>
+				</form>
+			</div>
+		</div>
+		
+		<div id="updateUserModal" class="modal">
+			<div class="modal-content">
+				<span class="close">&times;</span>
+				<div class="header-title-text">Изменить пользователя</div>
+				<form class="update-form" action="/admin/updateUser" method="POST">
+					<input type="hidden" name="user-id">
+					<div class="form-group">
+						<div class="card-text-title">Имя:</div>
+						<input type="text" name="update-name">
+					</div>
+					<div class="form-group">
+						<div class="card-text-title">Email:</div>
+						<input type="email" name="update-email">
+					</div>
+					<div class="form-group">
+						<div class="card-text-title">Новый пароль:</div>
+						<input type="password" name="update-password">
+					</div>
+					<div class="form-group">
+						<div class="card-text-title">Администратор:</div>
+						<select name="update-is-admin">
+							<option value="1">Да</option>
+							<option value="0">Нет</option>
+						</select>
+					</div>
+					<button type="submit" class="user-button form-button-update">Обновить</button>
+				</form>
+			</div>
+		</div>
+
+		<div id="messageModal" class="modal">
+			<div class="modal-content">
+				<span class="close">&times;</span>
+				<div id="messageContent" class="header-title-text"></div>
+			</div>
+		</div>
+
+		<%- include('../common/footer.ejs') %>
+
+		<script src="/scripts/jquery.js"></script>
+		<script src="/scripts/admin/usersDb.js"></script>
+	</body>
+</html>
