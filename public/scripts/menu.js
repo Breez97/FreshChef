@@ -41,6 +41,7 @@ $(document).ready(function() {
 	
 		if (query === '') {
 			$('.content-container').append(originalContainers);
+			$('.error-text').text('');
 		} else {
 			let newContainers = [];
 			let currentBoxes = [];
@@ -62,6 +63,12 @@ $(document).ready(function() {
 	
 			for (let i = 0; i < newContainers.length; i++) {
 				$('.content-container').append(newContainers[i]);
+			}
+
+			if (newContainers.length === 0) {
+				$('.error-text').text('Таких товаров нет');
+			} else {
+				$('.error-text').text('');
 			}
 		}
 	});

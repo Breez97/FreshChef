@@ -13,7 +13,7 @@ router.get('/profile', (req, res) => {
 			SELECT orders.number_current_order, orders.id, orders.quantity, dishes.title, dishes.price, dishes.img
 			FROM orders
 			JOIN dishes ON orders.id_dish = dishes.id
-			WHERE orders.id_user = ?
+			WHERE orders.id_user = ? AND orders.is_finished = 1
 		`;
 
 		connection.query(query, [userId], (err, results) => {
@@ -52,7 +52,7 @@ router.post('/save', urlParser, (req, res) => {
 		SELECT orders.number_current_order, orders.id, orders.quantity, dishes.title, dishes.price, dishes.img
 		FROM orders
 		JOIN dishes ON orders.id_dish = dishes.id
-		WHERE orders.id_user = ?
+		WHERE orders.id_user = ? AND orders.is_finished = 1
 	`;
 
 	connection.query(getOrderQuery, [id], (err, orderResults) => {

@@ -1,5 +1,4 @@
 $(document).ready(function() {
-
     function updateTotalPrice() {
         let totalPrice = 0;
         $('.order-item').each(function() {

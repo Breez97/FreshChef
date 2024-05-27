@@ -18,7 +18,8 @@
 	justify-content: space-between;
 	width: 800px;
 	border-radius: 10px;
-	border: 5px solid rgb(111, 206, 149);
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ccc;
 	padding: 10px;
 	min-height: 300px;
 	margin: 10px;
@@ -56,19 +57,17 @@
     background-color: rgb(40, 167, 69);
     color: white;
     font-weight: bold;
-    cursor: pointer;
 	transition: .4s;
 }
 
 .save-form button[type="submit"]:disabled {
-    background-color: #ccc;
-    color: #666;
-    cursor: not-allowed;
+    background-color: rgb(204, 204, 204);
+    color: rgb(102, 102, 102);
 }
 
 .save-form button[type="submit"]:not(:disabled):hover {
 	transition: .4s;
-    background-color: #218838;
+    background-color: rgb(33, 136, 56);
 }
 
 .buttons-container {

@@ -54,6 +54,9 @@ app.use(infoRoutes);
 const shoppingBagRoutes = require('./routes/shopping_bag.js');
 app.use(shoppingBagRoutes);
 
+const reviewsRoutes = require('./routes/reviews.js');
+app.use(reviewsRoutes);
+
 app.post('/logout', (req, res) => {
 	req.session.destroy((error) => {
 		if (error) {
