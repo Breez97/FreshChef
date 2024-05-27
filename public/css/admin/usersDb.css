@@ -88,7 +88,7 @@ a.user-button:hover {
     margin: 20px;
 }
 
-a[name=add-button] {
+a[name=add-button], a[name=back-button] {
     margin-top: 20px;
     margin-bottom: 10px;
     width: 300px;

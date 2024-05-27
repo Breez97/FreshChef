@@ -290,4 +290,62 @@ router.post('/addUser', urlParser, (req, res) => {
 	});
 });
 
+router.post('/updateUser', urlParser, (req, res) => {
+	const {
+		'user-id': userId,
+		'update-name': name,
+		'update-email': email,
+		'update-password': password,
+		'update-is-admin': admin
+	} = req.body;
+	
+	connection.query(`SELECT * FROM users WHERE email=? AND id!=?`, [email, userId], (error, result) => {
+		if (error) {
+			return res.status(500).send({ message: 'DatabaseError' });
+		}
+
+		if (result.length > 0) {
+			return res.status(200).send({
+				success: false,
+				message: 'Пользователь с такой почтой уже есть в базе данных'
+			});
+		} else {
+			connection.query(`UPDATE users SET is_admin=?, name=?, email=?, password=? WHERE id=?`, [admin, name, email, password, userId], (error, result) => {
+				if (error) {
+					return res.status(500).send({ message: 'DatabaseError' });
+				}
+
+				return res.status(200).send({
+					message: 'Пользователь успешно обновлен',
+					user: {
+						id: userId,
+						name: name,
+						email: email,
+						password: password,
+						isAdmin: admin
+					}
+				});
+			});
+		}
+	});
+});
+
+router.post('/admin/deleteUser/:id', (req, res) => {
+	const userId = req.params.id;
+
+	connection.query('DELETE FROM users WHERE id=?', [userId], (error, result) => {
+		if (error) {
+			return res.status(500).send({
+				success: false,
+				message: 'DatabaseError'
+			});
+		}
+
+		return res.status(200).send({
+			success: true,
+			message: 'Пользователь успешно удален'
+		});
+	});
+});
+
 module.exports = router;
