@@ -194,3 +194,7 @@
 .field-hidden {
     display: none;
 }
+
+.header-text-info {
+    margin: 30px;
+}

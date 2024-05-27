@@ -37,44 +37,26 @@
 						<textarea name="message" placeholder="Ваше сообщение"></textarea>
 					</div>
 					<% if (user) { %>
-						<button type="submit" class="submit-button" disabled>Отправить</button>
+						<button type="submit" class="submit-button">Отправить</button>
 					<% } else { %>
 						<button type="submit" class="submit-button go-to-auth" disabled>Отправить</button>
 					<% } %>
 				</form>
 			</div>
-			
+
 			<div class="reviews-container">
-				<div class="review">
-					<div class="review-header">
-						<div class="review-header-text">Отзыв</div>
-						<div class="review-header-text">Иван Иванов</div>
-						<div class="review-main-text">+7 (900) 123-45-67</div>
+				<% reviews.forEach(review => { %>
+					<div class="review">
+						<div class="review-header">
+							<div class="review-header-text"><%= review.theme %></div>
+							<div class="review-header-text"><%= review.name %></div>
+							<div class="review-main-text"><%= review.phone %></div>
+						</div>
+						<div class="review-message">
+							<%= review.review %>
+						</div>
 					</div>
-					<div class="review-message">
-						Спасибо за отличный сервис! Всё было на высшем уровне.
-					</div>
-				</div>
-				<div class="review">
-					<div class="review-header">
-						<div class="review-header-text">Отзыв</div>
-						<div class="review-header-text">Иван Иванов</div>
-						<div class="review-main-text">+7 (900) 123-45-67</div>
-					</div>
-					<div class="review-message">
-						Спасибо за отличный сервис! Всё было на высшем уровне.
-					</div>
-				</div>
-				<div class="review">
-					<div class="review-header">
-						<div class="review-header-text">Отзыв</div>
-						<div class="review-header-text">Иван Иванов</div>
-						<div class="review-main-text">+7 (900) 123-45-67</div>
-					</div>
-					<div class="review-message">
-						Спасибо за отличный сервис! Всё было на высшем уровне.
-					</div>
-				</div>
+				<% }); %>
 			</div>
 		</div>
 

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="icon" type="image/x-icon" href="/icon/icon.ico">
+		<link rel="stylesheet" href="/css/fonts.css">
+		<link rel="stylesheet" href="/css/main.css">
+		<link rel="stylesheet" href="/css/header.css">
+		<link rel="stylesheet" href="/css/footer.css">
+		<link rel="stylesheet" href="/css/admin/admin.css">
+		<title>Админ панель</title>
+	</head>
+	<body>
+
+	<%- include('../common/header.ejs') %>
+
+	<div class="content-container">
+		<div class="text-container">
+			<div class="info-text">Добро пожаловать на страницу администратора</div>
+			<div class="info-text">Выберите нужную панель из списка ниже</div>
+		</div>
+		<a href="/dishesDb" class="admin-button">Блюда</a>
+		<a href="/users" class="admin-button">Пользователи</a>
+	</div>
+
+	<%- include('../common/footer.ejs') %>
+
+	<script src="/scripts/jquery.js"></script>
+	<script src="/scripts/admin/admin.js"></script>
+
+	</body>
+</html>

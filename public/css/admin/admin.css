@@ -1,0 +1,53 @@
+.content-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 450px;
+}
+
+.admin-button {
+    background-color: rgb(40, 167, 69);
+    color: white;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    width: 200px;
+    text-align: center;
+	transition: .4s;
+}
+
+.admin-button:hover {
+    background-color: rgb(33, 136, 56);
+	transition: .4s;
+}
+
+.admin-button:active {
+	background-color: rgb(24, 101, 41);
+	transition: .4s;
+}
+
+a {
+    font-family: 'Montserrat-Medium';
+    font-size: 20px;
+}
+
+.admin-button:hover {
+    color: white;
+}
+
+.text-container {
+    border-radius: 5px;
+    margin-top: 20px; 
+    text-align: center;
+}
+
+.info-text {
+	font-family: 'Montserrat-Bold';
+	margin: 10px;
+    font-size: 20px;
+    color: #333;
+}

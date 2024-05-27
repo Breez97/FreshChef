@@ -6,15 +6,21 @@ const urlParser = bodyParser.urlencoded({ extended: false });
 const connection = require('../database/database_connection.js');
 
 router.get('/reviews', (req, res) => {
-	if (req.session.user) {
-		return res.status(200).contentType('text/html').render('reviews', { 
-			user: req.session.user
-		});
-	} else {
-		return res.status(200).contentType('text/html').render('reviews', { 
-			user: null
-		});
-	}
+    const reviewsQuery = `
+        SELECT reviews.id_user, reviews.review, reviews.theme, reviews.phone, users.name
+        FROM reviews
+        JOIN users ON reviews.id_user = users.id
+    `;
+
+    connection.query(reviewsQuery, (error, result) => {
+        if (error) {
+            return res.status(500).redirect('/');
+        }
+        return res.status(200).contentType('text/html').render('reviews', { 
+            user: req.session.user || null,
+            reviews: result
+        });
+    });
 });
 
 router.post('/submitReview', urlParser, (req, res) => {

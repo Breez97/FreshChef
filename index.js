@@ -57,13 +57,16 @@ app.use(shoppingBagRoutes);
 const reviewsRoutes = require('./routes/reviews.js');
 app.use(reviewsRoutes);
 
+const adminRoutes = require('./routes/admin.js');
+app.use(adminRoutes);
+
 app.post('/logout', (req, res) => {
 	req.session.destroy((error) => {
 		if (error) {
 			return res.status(500);
 		}
 		res.clearCookie('connect.sid');
-		return res.status(200).send('Вы успешно вышли из системы.');
+		return res.status(200).redirect('/');
 	});
 });
 

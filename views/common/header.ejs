@@ -6,6 +6,9 @@
 		<a class="menu" href="/menu">
 			МЕНЮ
 		</a>
+		<% if (user && user.is_admin == 1) { %>
+			<a class="menu" href="/admin">АДМИН ПАНЕЛЬ</a>
+		<% } %>
 	</div>
 	<a class="header-logo" href="/">
 		<img src="/img/content/logo.svg">

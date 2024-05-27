@@ -29,13 +29,20 @@ $(document).ready(function() {
 
 	$('button.submit-button:not(.go-to-auth)').on('click', function(event) {
 		event.preventDefault();
-
+	
 		let phoneNumber = $('.feedback-form').find('input[name=phone]').val();
 		let choosedTheme = $('.feedback-form').find('select[name=subject]').val();
 		let comment = $('.feedback-form').find('textarea[name=message]').val();
-
+	
+		let phonePattern = /^\+7\(\d{3}\)\d{3}-\d{2}-\d{2}$/;
+		if (!phonePattern.test(phoneNumber)) {
+			$('#successModal').css('display', 'flex');
+			$('#successModal').find('p').text('Неверный формат номера телефона. Пожалуйста, используйте формат +7(000)000-00-00');
+			return;
+		}
+	
 		let theme = 'Отзыв';
-		switch(choosedTheme) {
+		switch (choosedTheme) {
 			case 'question':
 				theme = 'Вопрос';
 				break;
@@ -48,7 +55,7 @@ $(document).ready(function() {
 			default:
 				break;
 		}
-		
+	
 		$.ajax({
 			type: 'POST',
 			url: '/submitReview',
@@ -57,16 +64,16 @@ $(document).ready(function() {
 				theme: theme,
 				comment: comment
 			},
-			success: function(response) {
-				let userName = response.name;
-				
+			success: function(data) {
+				let userName = data.name;
+	
 				$('input[name="phone"]').val('');
 				$('select[name="subject"]').val('review');
 				$('textarea[name="message"]').val('');
-		
+	
 				$('#successModal').css('display', 'flex');
 				let infoText = 'Ваш отзыв размещен. Спасибо!';
-				if (theme === 'Отзыв') {
+				if (theme === 'Вопрос') {
 					infoText = 'Ваш вопрос размещен. Спасибо!';
 				} else if (theme === 'Предложение') {
 					infoText = 'Ваше предложение размещено. Спасибо!';
@@ -74,7 +81,7 @@ $(document).ready(function() {
 					infoText = 'Ваша жалоба размещена. Спасибо!';
 				}
 				$('#successModal').find('p').text(infoText);
-				
+	
 				let newReview = $('<div class="review"></div>');
 				let newReviewHeader = $('<div class="review-header"></div>');
 				newReviewHeader.append($(`<div class="review-header-text">${theme}</div>`));
@@ -87,6 +94,6 @@ $(document).ready(function() {
 			error: function(xhr, status, error) {
 				console.error('Ошибка при отправке формы:', error);
 			}
-		});		
+		});
 	});
 });

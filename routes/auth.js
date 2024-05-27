@@ -6,7 +6,9 @@ const urlParser = bodyParser.urlencoded({ extended: false });
 const connection = require('../database/database_connection.js');
 
 router.get('/auth', (req, res) => {
-	res.status(200).contentType('text/html').render('authentification');
+	res.status(200).contentType('text/html').render('authentification', {
+		user: null
+	});
 });
 
 router.post('/login', urlParser, (req, res) => {
@@ -20,6 +22,7 @@ router.post('/login', urlParser, (req, res) => {
 
 		if (result.length === 0) {
 			return res.status(301).render('authentification', {
+				user: null,
 				form: 'auth',
 				email: email,
 				message: 'Пользователь с такой почтой не зарегистрирован'
@@ -33,6 +36,7 @@ router.post('/login', urlParser, (req, res) => {
 
 			if (result.length === 0) {
 				return res.status(301).render('authentification', {
+					user: null,
 					form: 'auth',
 					email: email,
 					message: 'Неверный пароль'

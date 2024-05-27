@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="icon" type="image/x-icon" href="/icon/icon.ico">
+		<link rel="stylesheet" href="/css/fonts.css">
+		<link rel="stylesheet" href="/css/main.css">
+		<link rel="stylesheet" href="/css/header.css">
+		<link rel="stylesheet" href="/css/footer.css">
+		<link rel="stylesheet" href="/css/admin/dishesDb.css">
+		<title>База данных блюд</title>
+	</head>
+	<body>
+
+	<%- include('../common/header.ejs') %>
+
+	<a name="add-button" class="dish-button">Добавить</a>
+
+	<div class="content-container">
+		<% if (dishes.length > 0) { %>
+			<% dishes.forEach(dish => { %>
+				<div class="dish-info-container">
+					<input type="hidden" name="dishId" value="<%= dish.id %>">
+					<div class="button-container">
+						<a name="update-button" class="dish-button">Изменить</a>
+						<form action="/admin/delete/<%= dish.id %>" method="POST" class="delete-form">
+							<button type="submit" class="dish-button remove-button">Удалить</button>
+						</form>
+					</div>
+					<div class="header-title-text"><%= dish.title %></div>
+					<div class="image-container">
+						<img src="<%= dish.img %>" class="dish-image">
+					</div>
+					<div class="text-container">
+						<div class="card-text-info-description"><%= dish.description %></div>
+						<div class="nutrition-table">
+							<div class="nutrition-row">
+								<div class="card-text-info">Калории:</div>
+								<div class="card-text-info"><%= dish.calories %></div>
+							</div>
+							<div class="nutrition-row">
+								<div class="card-text-info">Белки:</div>
+								<div class="card-text-info"><%= dish.protein %>g</div>
+							</div>
+							<div class="nutrition-row">
+								<div class="card-text-info">Жиры:</div>
+								<div class="card-text-info"><%= dish.fat %>g</div>
+							</div>
+							<div class="nutrition-row">
+								<div class="card-text-info">Углеводы:</div>
+								<div class="card-text-info"><%= dish.carbohydrates %>g</div>
+							</div>
+						</div>
+						<div class="additional-info">
+							<div class="card-text-info">Количество: <%= dish.amount %>g</div>
+							<div class="card-text-info">Цена: <%= dish.price %> ₽</div>
+						</div>
+					</div>
+				</div>
+			<% }); %>
+		<% } else { %>
+			<div class="header-text-info">База данных пуста</div>
+		<% } %>
+	</div>
+
+	<div id="addDishModal" class="modal">
+		<div class="modal-content">
+			<span class="close">&times;</span>
+			<div class="header-title-text">Добавить новое блюдо</div>
+			<form class="add-form" enctype="multipart/form-data" action="/admin/addDish" method="POST">
+				<div class="form-group">
+					<div class="card-text-title">Название:</div>
+					<input type="text" name="new-title">
+				</div>
+				<div class="form-group">
+					<div class="card-text-title">Краткое описание:</div>
+					<input type="text" name="new-short-description">
+				</div>
+				<div class="form-group">
+					<div class="card-text-title">Изображение:</div>
+					<input type="file" name="new-image" required>
+				</div>
+				<div class="form-group">
+					<div class="card-text-title">Количество (g):</div>
+					<input type="number" name="new-amount">
+				</div>
+				<div class="form-group">
+					<div class="card-text-title">Цена (₽):</div>
+					<input type="number" name="new-price">
+				</div>
+				<div class="form-group">
+					<div class="card-text-title">Описание:</div>
+					<textarea name="new-description"></textarea>
+				</div>
+				<div class="form-group">
+					<div class="card-text-title">Калории:</div>
+					<input type="number" name="new-calories">
+				</div>
+				<div class="form-group">
+					<div class="card-text-title">Жиры (g):</div>
+					<input type="number" name="new-fat">
+				</div>
+				<div class="form-group">
+					<div class="card-text-title">Углеводы (g):</div>
+					<input type="number" name="new-carbohydrates">
+				</div>
+				<div class="form-group">
+					<div class="card-text-title">Белки (g):</div>
+					<input type="number" name="new-protein">
+				</div>
+				<button type="submit" class="dish-button form-button-add" disabled>Добавить</button>
+			</form>
+		</div>
+	</div>
+
+	<div id="messageModal" class="modal">
+		<div class="modal-content">
+			<span class="close">&times;</span>
+			<div id="messageContent" class="header-title-text"></div>
+		</div>
+	</div>
+
+	<%- include('../common/footer.ejs') %>
+
+	<script src="/scripts/jquery.js"></script>
+	<script src="/scripts/admin/dishesDb.js"></script>
+
+	</body>
+</html>

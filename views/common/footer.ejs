@@ -10,6 +10,9 @@
 			<a class="footer-main-text" href="/menu">МЕНЮ</a>
 			<a class="footer-main-text" href="/reviews">ОТЗЫВЫ</a>
 			<a class="footer-main-text" href="<%= (typeof user !== 'undefined' && user) ? '/profile' : '/auth' %>">ПРОФИЛЬ</a>
+			<% if (user && user.is_admin == 1) { %>
+				<a class="footer-main-text" href="/admin">АДМИН ПАНЕЛЬ</a>
+			<% } %>
 		</div>
 	</div>
 	<div class="footer-navigation-container">
