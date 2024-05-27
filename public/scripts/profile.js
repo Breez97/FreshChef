@@ -34,8 +34,8 @@ $(document).ready(function() {
 		if (!$(this).hasClass('selected')) {
 			$('a.button-orders').removeClass('selected');
 			$(this).addClass('selected');
-			$('div.orders-container').addClass('form-hidden');
-			$('form.save-form').removeClass('form-hidden');
+			$('div.orders-container').addClass('field-hidden');
+			$('div.input-form').removeClass('field-hidden');
 		}
 	});
 
@@ -43,23 +43,18 @@ $(document).ready(function() {
 		if (!$(this).hasClass('selected')) {
 			$('a.button-profile').removeClass('selected');
 			$(this).addClass('selected');
-			$('form.save-form').addClass('form-hidden');
-			$('div.orders-container').removeClass('form-hidden');
+			$('div.input-form').addClass('field-hidden');
+			$('div.orders-container').removeClass('field-hidden');
 		}
 	});
 
-	$(document).ready(function() {
-		$('.logout-button').on('click', function() {
-			$.ajax({
-				method: 'POST',
-				url: '/logout',
-				success: function() {
-					window.location.href = '/auth';
-				},
-				error: function() {
-					alert('Ошибка при выходе из системы. Пожалуйста, попробуйте еще раз.');
-				}
-			});
+	$('.logout-button').on('click', function() {
+		$.ajax({
+			method: 'POST',
+			url: '/logout',
+			success: function() {
+				window.location.href = '/auth';
+			}
 		});
 	});
 });

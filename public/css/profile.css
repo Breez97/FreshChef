@@ -93,8 +93,8 @@
 	text-align: center;
 }
 
-.form-hidden {
-	display: none;
+.input-form {
+	text-align: center;
 }
 
 .dish-button {
@@ -121,4 +121,77 @@
 .dish-button:active {
 	transition: .4s;
     background-color: rgb(24, 101, 41);
+}
+
+.orders-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.order-group {
+    width: 90%;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.order-group-header {
+    font-family: 'Montserrat-Bold';
+    font-size: 18px;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.order-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 95%;
+    border-bottom: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.order-item:last-child {
+    border-bottom: none;
+}
+
+.order-item-img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    margin-right: 20px;
+}
+
+.order-item-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.order-item-title {
+    font-family: 'Montserrat-Bold';
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.order-item-quantity, .order-item-price {
+    font-family: 'Montserrat-Regular';
+    font-size: 16px;
+}
+
+.order-total {
+    font-family: 'Montserrat-Bold';
+    font-size: 18px;
+    margin-top: 10px;
+    text-align: right;
+    padding-top: 10px;
+    color: #333;
+}
+
+.field-hidden {
+    display: none;
 }

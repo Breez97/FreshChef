@@ -13,15 +13,16 @@
 	</head>
 	<body>
 
-		<%- include('./common/header.ejs') %>
+	<%- include('./common/header.ejs') %>
 
-		<div class="content-container">
-			<div class="info-form">
-				<div class="buttons-container">
-					<a class="button-profile selected">Профиль</a>
-					<a class="button-orders">Заказы</a>
-				</div>
-				<img src="/img/content/logo.svg" class="info-logo">
+	<div class="content-container">
+		<div class="info-form">
+			<div class="buttons-container">
+				<a class="button-profile selected">Профиль</a>
+				<a class="button-orders">Заказы</a>
+			</div>
+			<img src="/img/content/logo.svg" class="info-logo">
+			<div class="input-form">
 				<div class="header-text-info">Добро пожаловать в личный кабинет</div>
 
 				<form class="save-form" method="POST" action="/save">
@@ -38,17 +39,41 @@
 				</form>
 
 				<div class="dish-button logout-button">Выйти</div>
-
-				<div class="orders-container form-hidden">
-					<!-- Заказы будут здесь -->
-				</div>
 			</div>
+
+			<div class="orders-container field-hidden">
+				<% if (Object.keys(orders).length > 0) { %>
+					<% Object.keys(orders).forEach(orderNumber => { %>
+						<div class="order-group">
+							<div class="order-group-header">
+								Заказ №<%= orderNumber %>
+							</div>
+							<% orders[orderNumber].items.forEach(order => { %>
+								<div class="order-item">
+									<img src="<%= order.img %>" alt="<%= order.title %>" class="order-item-img">
+									<div class="order-item-details">
+										<div class="order-item-title"><%= order.title %></div>
+										<div class="order-item-price">Цена: <%= order.price %> ₽</div>
+										<div class="order-item-quantity">Количество: <%= order.quantity %></div>
+									</div>
+								</div>
+							<% }); %>
+							<div class="order-total">
+								Итоговая стоимость: <%= orders[orderNumber].total %> ₽
+							</div>
+						</div>
+					<% }); %>
+				<% } else { %>
+					<div class="header-text-info">У вас нет заказов</div>
+				<% } %>
+			</div>			
 		</div>
+	</div>
 
-		<%- include('./common/footer.ejs') %>
+	<%- include('./common/footer.ejs') %>
 
-		<script src="/scripts/jquery.js"></script>
-		<script src="/scripts/profile.js"></script>
+	<script src="/scripts/jquery.js"></script>
+	<script src="/scripts/profile.js"></script>
 
 	</body>
 </html>
