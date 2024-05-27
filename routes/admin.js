@@ -205,4 +205,22 @@ router.post('/updateDish', upload.single('update-image'), (req, res) => {
 	})
 });
 
+router.post('/admin/delete/:id', (req, res) => {
+	const dishId = req.params.id;
+
+	connection.query(`DELETE FROM dishes WHERE id = ?`, [dishId], (error, result) => {
+		if (error) {
+			return res.status(500).send({
+				success: false,
+				message: 'DatabaseError'
+			});
+		}
+
+		return res.status(200).send({
+			success: true,
+			message: 'Блюдо успешно удалено'
+		});
+	});
+});
+
 module.exports = router;

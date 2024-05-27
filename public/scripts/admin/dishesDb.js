@@ -204,4 +204,25 @@ $(document).ready(function() {
 			}
 		});
 	});
+
+	$('.content-container').on('submit', '.delete-form', function(e) {
+        e.preventDefault();
+
+        const form = $(this);
+        const dishId = form.closest('.dish-info-container').find('input[name="dishId"]').val();
+
+        $.ajax({
+            url: `/admin/delete/${dishId}`,
+            type: 'POST',
+            success: function(response) {
+                form.closest('.dish-info-container').remove();
+                $('#messageContent').text('Блюдо успешно удалено');
+                $('#messageModal').css('display', 'flex');
+            },
+            error: function(response) {
+                $('#messageContent').text('Произошла ошибка при удалении блюда. Попробуйте снова.');
+                $('#messageModal').css('display', 'flex');
+            }
+        });
+    });
 });
