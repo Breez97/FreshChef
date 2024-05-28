@@ -367,7 +367,7 @@ router.post('/updateUser', urlParser, (req, res) => {
 				}
 
 				return res.status(200).send({
-					message: 'Пользователь успешно обновлен',
+					message: `Пользователь ${name} успешно обновлен`,
 					user: {
 						id: userId,
 						name: name,

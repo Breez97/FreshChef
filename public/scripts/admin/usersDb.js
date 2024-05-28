@@ -82,15 +82,19 @@ $(document).ready(function() {
 						<div class="user-info-container">
 							<input type="hidden" name="userId" value="${user.id}">
 							<div class="button-container">
-								<a name="update-user-button" class="user-button">Изменить</a>
+								<a name="update-button" class="user-button">Изменить</a>
 								<form action="/admin/deleteUser/${user.id}" method="POST" class="delete-form">
 									<button type="submit" class="user-button remove-button">Удалить</button>
 								</form>
 							</div>
 							<div class="header-title-text">${user.name}</div>
-							<div class="additional-info">
-								<div class="card-text-info">Email: ${user.email}</div>
-								<div class="card-text-info">Администратор: ${user.isAdmin ? 'Да' : 'Нет'}</div>
+							<div class="text-container">
+								<div class="user-info-label">Email:</div>
+								<div class="card-text-info">${user.email}</div>
+								<div class="user-info-label">Пароль:</div>
+								<div class="card-text-info">${user.password}</div>
+								<div class="user-info-label">Администратор:</div>
+								<div class="card-text-info">${user.isAdmin ? 'Да' : 'Нет'}</div>
 							</div>
 						</div>
 					`;
