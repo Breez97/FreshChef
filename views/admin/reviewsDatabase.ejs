@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="icon" type="image/x-icon" href="/icon/icon.ico">
+		<link rel="stylesheet" href="/css/fonts.css">
+		<link rel="stylesheet" href="/css/main.css">
+		<link rel="stylesheet" href="/css/header.css">
+		<link rel="stylesheet" href="/css/footer.css">
+		<link rel="stylesheet" href="/css/admin/reviewsDb.css">
+		<title>База данных отзывов</title>
+	</head>
+	<body>
+
+		<%- include('../common/header.ejs') %>
+
+		<a href="/admin" name="back-button" class="review-button">Вернуться назад</a>
+
+		<div class="content-container">
+			<% if (reviews.length > 0) { %>
+				<% reviews.forEach(review => { %>
+					<div class="review-info-container">
+						<input type="hidden" name="reviewId" value="<%= review.id %>">
+						<div class="button-container">
+							<form action="/admin/deleteReview/<%= review.id %>" method="POST" class="delete-form">
+								<button type="submit" class="review-button remove-button">Удалить</button>
+							</form>
+						</div>
+						<div class="header-title-text"><%= review.user_name %></div>
+						<div class="text-container">
+							<div class="review-info-label">Тема:</div>
+							<div class="card-text-info"><%= review.theme %></div>
+							<div class="review-info-label">Отзыв:</div>
+							<div class="card-text-info"><%= review.review %></div>
+							<div class="review-info-label">Телефон:</div>
+							<div class="card-text-info"><%= review.phone %></div>
+						</div>
+					</div>
+				<% }); %>
+			<% } else { %>
+				<div class="header-text-info">Нет отзывов</div>
+			<% } %>
+		</div>
+
+		<div id="messageModal" class="modal">
+			<div class="modal-content">
+				<span class="close">&times;</span>
+				<div id="messageContent" class="header-title-text"></div>
+			</div>
+		</div>
+
+		<%- include('../common/footer.ejs') %>
+
+		<script src="/scripts/jquery.js"></script>
+		<script src="/scripts/admin/reviewsDb.js"></script>
+	</body>
+</html>

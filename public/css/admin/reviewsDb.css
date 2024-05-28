@@ -1,0 +1,135 @@
+.content-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.review-info-container {
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    max-width: 400px;
+    width: 100%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: 0.3s;
+}
+
+.review-info-container:hover {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.text-container {
+    flex: 1;
+    padding-left: 20px;
+    align-items: center;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    margin: 10px 0 10px 0;
+}
+
+.review-button {
+    font-family: 'Montserrat-Medium';
+    font-size: 16px;
+    padding: 10px 20px;
+    color: white;
+    background-color: rgb(40, 167, 69);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: .4s;
+}
+
+.review-button:hover {
+    background-color: rgb(33, 136, 56);
+}
+
+.remove-button {
+    background-color: rgb(119, 119, 119);
+}
+
+.remove-button:hover {
+    background-color: rgb(74, 74, 74);
+}
+
+.remove-button:active {
+    background-color: rgb(50, 50, 50);
+}
+
+a.review-button:hover {
+    color: white;
+}
+
+.header-title-text {
+    text-align: center;
+    font-family: 'Montserrat-Bold';
+    font-size: 20px;
+    margin: 20px;
+}
+
+.card-text-info {
+    font-family: 'Montserrat-Regular';
+    font-size: 14px;
+    text-align: justify;
+}
+
+a[name=back-button] {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    width: 300px;
+    align-self: center;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 100%;
+    max-width: 600px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover, .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.review-info-label {
+	font-family: 'Montserrat-Bold';
+	font-size: 16px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}

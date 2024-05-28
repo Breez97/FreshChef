@@ -4,9 +4,9 @@ const bodyParser = require('body-parser');
 const multer = require('multer');
 const urlParser = bodyParser.urlencoded({ extended: true });
 const path = require('path');
+const fs = require('fs');
 
 const connection = require('../database/database_connection.js');
-const { error } = require('console');
 
 router.get('/admin', (req, res) => {
 	if (req.session.user && req.session.user.is_admin == 1) {
@@ -231,30 +231,48 @@ router.post('/admin/delete/:id', (req, res) => {
 				message: 'DatabaseError'
 			});
 		}
-		if (result.length > 0) {
-			const imgPath = path.join(__dirname, 'public', result[0].img);
 
-			connection.query(`DELETE FROM dishes WHERE id = ?`, [dishId], (error, result) => {
-				if (error) {
-					return res.status(500).send({
+		const imgPath = result[0]?.img;
+		if (imgPath) {
+			const absolutePath = path.join(__dirname, '..', 'public', imgPath);
+
+			fs.access(absolutePath, fs.constants.F_OK, (err) => {
+				if (err) {
+					console.error('File does not exist:', absolutePath);
+					return res.status(404).send({
 						success: false,
-						message: 'DatabaseError'
+						message: 'Image file not found'
 					});
 				}
-				fs.unlink(imgPath, (err) => {
+
+				fs.unlink(absolutePath, (err) => {
 					if (err) {
 						console.error('Error deleting image file:', err);
+						return res.status(500).send({
+							success: false,
+							message: 'Error deleting image file'
+						});
 					}
-					return res.status(200).send({
-						success: true,
-						message: 'Блюдо успешно удалено'
+
+					connection.query(`DELETE FROM dishes WHERE id = ?`, [dishId], (error, result) => {
+						if (error) {
+							return res.status(500).send({
+								success: false,
+								message: 'DatabaseError'
+							});
+						}
+
+						return res.status(200).send({
+							success: true,
+							message: 'Блюдо успешно удалено'
+						});
 					});
 				});
 			});
 		} else {
 			return res.status(404).send({
 				success: false,
-				message: 'Блюдо не найдено'
+				message: 'Image not found'
 			});
 		}
 	});
@@ -366,6 +384,38 @@ router.post('/admin/deleteUser/:id', (req, res) => {
 			success: true,
 			message: 'Пользователь успешно удален'
 		});
+	});
+});
+
+router.get('/reviewsDb', (req, res) => {
+	const query = `
+		SELECT reviews.*, users.name as user_name 
+		FROM reviews 
+		JOIN users ON reviews.id_user = users.id
+	`;
+
+	connection.query(query, (error, result) => {
+		if (error) {
+			return res.status(500).json({ 
+				success: false, 
+				message: 'DatabaseError' 
+			});
+		}
+		res.status(200).render('admin/reviewsDatabase', { 
+			user: req.session.user,
+			reviews: result 
+		});
+	});
+});
+
+router.post('/admin/deleteReview/:id', (req, res) => {
+	const reviewId = req.params.id;
+
+	connection.query('DELETE FROM reviews WHERE id = ?', [reviewId], (error, results) => {
+		if (error) {
+			return res.status(500).json({ success: false, message: 'DatabaseError' });
+		}
+		res.status(200).json({ success: true, message: 'Отзыв был успешно удален', reviewId });
 	});
 });
 
