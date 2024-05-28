@@ -58,7 +58,7 @@ router.post('/save', urlParser, (req, res) => {
 	connection.query(getOrderQuery, [id], (err, orderResults) => {
 		if (err) {
 			console.error('Error fetching orders: ', err);
-			return res.status(500).send('Internal Server Error');
+			return res.status(500).json({ success: false, message: 'Internal Server Error' });
 		}
 
 		const groupedOrders = orderResults.reduce((acc, order) => {
@@ -73,33 +73,29 @@ router.post('/save', urlParser, (req, res) => {
 
 		connection.query(`SELECT * FROM users WHERE email=? AND id!=?`, [email, id], (error, result) => {
 			if (error) {
-				return res.status(500).redirect('/');
+				return res.status(500).json({ success: false, message: 'Internal Server Error' });
 			}
 
 			if (result.length > 0) {
-				return res.status(301).render('profile', {
-					user: req.session.user,
-					message: 'Пользователь с такой почтой уже существует',
-					orders: groupedOrders
-				});
+				return res.status(200).json({ success: false, message: 'Пользователь с такой почтой уже существует' });
 			}
 
 			connection.query(`UPDATE users SET name=?, email=?, password=? WHERE id=?`, [name, email, password, id], (error, result) => {
 				if (error) {
-					return res.status(500).redirect('/');
+					return res.status(500).json({ success: false, message: 'Internal Server Error' });
 				}
 
 				connection.query(`SELECT * FROM users WHERE id=?`, [id], (error, userResult) => {
 					if (error) {
-						return res.status(500).redirect('/');
+						return res.status(500).json({ success: false, message: 'Internal Server Error' });
 					}
 
 					req.session.user = userResult[0];
 
-					return res.status(200).contentType('text/html').render('profile', {
-						user: req.session.user,
+					return res.status(200).json({
+						success: true,
 						message: 'Данные успешно сохранены',
-						currentUser: userResult[0],
+						user: req.session.user,
 						orders: groupedOrders
 					});
 				});

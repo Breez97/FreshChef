@@ -56,12 +56,12 @@ router.get('/usersDb', (req, res) => {
 });
 
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'public/img/dishes');
-    },
-    filename: function (req, file, cb) {
-        cb(null, file.originalname);
-    }
+	destination: function (req, file, cb) {
+		cb(null, 'public/img/dishes');
+	},
+	filename: function (req, file, cb) {
+		cb(null, file.originalname);
+	}
 });
 
 const fileFilter = (req, file, cb) => {
@@ -224,18 +224,39 @@ router.post('/updateDish', upload.single('update-image'), (req, res) => {
 router.post('/admin/delete/:id', (req, res) => {
 	const dishId = req.params.id;
 
-	connection.query(`DELETE FROM dishes WHERE id = ?`, [dishId], (error, result) => {
+	connection.query(`SELECT img FROM dishes WHERE id = ?`, [dishId], (error, result) => {
 		if (error) {
 			return res.status(500).send({
 				success: false,
 				message: 'DatabaseError'
 			});
 		}
+		if (result.length > 0) {
+			const imgPath = path.join(__dirname, 'public', result[0].img);
 
-		return res.status(200).send({
-			success: true,
-			message: 'Блюдо успешно удалено'
-		});
+			connection.query(`DELETE FROM dishes WHERE id = ?`, [dishId], (error, result) => {
+				if (error) {
+					return res.status(500).send({
+						success: false,
+						message: 'DatabaseError'
+					});
+				}
+				fs.unlink(imgPath, (err) => {
+					if (err) {
+						console.error('Error deleting image file:', err);
+					}
+					return res.status(200).send({
+						success: true,
+						message: 'Блюдо успешно удалено'
+					});
+				});
+			});
+		} else {
+			return res.status(404).send({
+				success: false,
+				message: 'Блюдо не найдено'
+			});
+		}
 	});
 });
 

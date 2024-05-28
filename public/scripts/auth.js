@@ -1,4 +1,57 @@
 $(document).ready(function() {
+	function showModal(message) {
+		$('#messageContent').text(message);
+		$('#messageModal').css('display', 'flex');
+	}
+
+	$('.auth-form.login').on('submit', function(e) {
+		e.preventDefault();
+
+		const formData = $(this).serialize();
+
+		$.ajax({
+			url: '/login',
+			type: 'POST',
+			data: formData,
+			success: function(response) {
+				if (response.success) {
+					window.location.href = '/';
+				} else {
+					showModal(response.message);
+				}
+			},
+			error: function() {
+				showModal('Произошла ошибка. Попробуйте снова.');
+			}
+		});
+	});
+
+	$('.auth-form.reg').on('submit', function(e) {
+		e.preventDefault();
+
+		const formData = $(this).serialize();
+
+		$.ajax({
+			url: '/reg',
+			type: 'POST',
+			data: formData,
+			success: function(response) {
+				if (response.success) {
+					window.location.href = '/';
+				} else {
+					showModal(response.message);
+				}
+			},
+			error: function() {
+				showModal('Произошла ошибка. Попробуйте снова.');
+			}
+		});
+	});
+	
+	$('.close').on('click', function() {
+		$('#messageModal').css('display', 'none');
+	});
+
 	let currentForm = $('input[name="currentForm"]').val();
 	if (currentForm === 'auth') {
 		$('form.reg').addClass('form-hidden');

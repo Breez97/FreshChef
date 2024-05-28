@@ -12,7 +12,6 @@
 		<title>Аутентификация</title>
 	</head>
 	<body>
-		
 		<%- include('./common/header.ejs') %>
 
 		<div class="content-container">
@@ -25,23 +24,24 @@
 					</div>
 					<input type="hidden" name="currentForm" value="<%= (typeof form !== 'undefined' && email) ? form : 'auth' %>">
 					<form class="auth-form login" method="POST" action="/login">
-						<input type="text" name="email" placeholder="Email" value="<%= (typeof email !== 'undefined' && email) ? email : '' %>">
+						<input type="email" name="email" placeholder="Email" value="<%= (typeof email !== 'undefined' && email) ? email : '' %>">
 						<input type="password" name="password" placeholder="Пароль">
-						<% if (typeof message !== 'undefined' && message) { %>
-							<div class="info-message"><%= message %></div>
-						<% } %>
 						<button type="submit" disabled>Войти</button>
 					</form>
 					<form class="auth-form reg form-hidden" method="POST" action="/reg">
 						<input type="text" name="name" placeholder="Имя Фамилия">
-						<input type="text" name="email" placeholder="Email" value="<%= (typeof email !== 'undefined' && email) ? email : '' %>">
+						<input type="email" name="email" placeholder="Email" value="<%= (typeof email !== 'undefined' && email) ? email : '' %>">
 						<input type="password" name="password" placeholder="Пароль (не менее 5 символов)">
-						<% if (typeof message !== 'undefined' && message) { %>
-							<div class="info-message"><%= message %></div>
-						<% } %>
-						<button type="submit" disabled>Зарегистироваться</button>
+						<button type="submit" disabled>Зарегистрироваться</button>
 					</form>
 				</div>
+			</div>
+		</div>
+
+		<div id="messageModal" class="modal">
+			<div class="modal-content">
+				<span class="close">&times;</span>
+				<div id="messageContent" class="header-title-text"></div>
 			</div>
 		</div>
 
@@ -49,6 +49,5 @@
 
 		<script src="/scripts/jquery.js"></script>
 		<script src="/scripts/auth.js"></script>
-		
 	</body>
 </html>

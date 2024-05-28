@@ -25,19 +25,12 @@
 			<div class="input-form">
 				<div class="header-text-info">Добро пожаловать в личный кабинет</div>
 
-				<form class="save-form" method="POST" action="/save">
+				<form id="profileForm" class="save-form" method="POST">
 					<div class="info-input-container">
 						<input type="hidden" name="id" value="<%= (typeof user !== 'undefined' && user) ? user.id : '' %>">
 						<input type="text" name="name" placeholder="Имя Фамилия" value="<%= (typeof user !== 'undefined' && user) ? user.name : '' %>">
 						<input type="email" name="email" placeholder="Email" value="<%= (typeof user !== 'undefined' && user) ? user.email : '' %>">
 						<input type="password" name="password" placeholder="Пароль">
-						<% if (typeof message !== 'undefined') { %>
-							<% if (message === 'Данные успешно сохранены') { %>
-								<div class="info-message black"><%= message %></div>
-							<% } else { %>
-								<div class="info-message"><%= message %></div>
-							<% } %>
-						<% } %>
 						<button type="submit" disabled>Сохранить</button>
 					</div>
 				</form>

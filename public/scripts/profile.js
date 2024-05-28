@@ -3,6 +3,36 @@ $(document).ready(function() {
 		$(this).closest('.modal').css('display', 'none');
 	});
 
+	$('#profileForm').on('submit', function(e) {
+        e.preventDefault();
+
+        const formData = $(this).serialize();
+
+        $.ajax({
+            url: '/save',
+            type: 'POST',
+            data: formData,
+            success: function(response) {
+                $('#messageContent').text(response.message);
+                $('#messageModal').css('display', 'flex');
+
+                if (response.user) {
+					$('#profileForm input[name="name"]').val(response.user.name);
+					$('#profileForm input[name="email"]').val(response.user.email);
+					$('#profileForm input[name="password"]').val('');
+                }
+            },
+            error: function(response) {
+                $('#messageContent').text('Произошла ошибка. Попробуйте снова.');
+                $('#messageModal').css('display', 'flex');
+            }
+        });
+    });
+
+    $('.close').on('click', function() {
+        $('#messageModal').css('display', 'none');
+    });
+
 	function checkFields(fieldName) {
 		let email = $(`form.${fieldName} input[name="email"]`).val();
 		let password = $(`form.${fieldName} input[name="password"]`).val();
