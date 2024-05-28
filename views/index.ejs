@@ -8,6 +8,7 @@
 		<link rel="stylesheet" href="/css/main.css">
 		<link rel="stylesheet" href="/css/header.css">
 		<link rel="stylesheet" href="/css/footer.css">
+		<link rel="stylesheet" href="/css/index.css">
 		<title>Fresh Chef</title>
 	</head>
 	<body>
@@ -26,6 +27,9 @@
 					</div>
 					<div>
 						<a class="button-link" href="/menu">Посмотреть меню</a>
+					</div>
+					<div>
+						<a class="button-link info-button">Информация</a>
 					</div>
 				</div>
 			</div>
@@ -62,9 +66,23 @@
 
 		</div>
 
+		<div id="messageModal" class="modal">
+			<div class="modal-content">
+				<span class="close">&times;</span>
+				<div class="header-title-text">Информация о проекте</div>
+				<div class="main-text">В данном проекте представлен интернет магазин для заказа и доставки готовой еды. На главной странице кратко представлена вся необходимая информация.</div>
+				<div class="main-text">На вкладке меню можно ознакомиться со всеми блюдами, нажав на которые можно получить полную информацию о составе и пищевой ценности, а также добавить в корзину.</div>
+				<div class="main-text">На вкладке отзывы представлена обратная связь пользователей, которые могут оставить свой комментарий/вопрос/жалобу/предложение, а также посмотреть уже существующие записи.</div>
+				<div class="main-text">В личной странице пользователя можно изменить иснформацию о себе, а также посмотреть историю своих заказов.</div>
+				<div class="main-text">Во вкладке корзина, можно изменить количество выбранных товаров, а также выполнить оплату.</div>
+				<div class="main-text">При входе на сайт с пользователя администратора ему предоставляется доступ к админ панели, в которой он может управлять блюдами, пользователями, смотреть и при необходимости удалять отзывыв пользователей.</div>
+			</div>
+		</div>
+
 		<%- include('./common/footer.ejs') %>
 
 		<script src="/scripts/jquery.js"></script>
 		<script src="/scripts/index.js"></script>
+		<script src="/scripts/modalIndex.js"></script>
 	</body>
 </html>
