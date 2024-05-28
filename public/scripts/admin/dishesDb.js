@@ -207,7 +207,7 @@ $(document).ready(function() {
 
 	$('.content-container').on('submit', '.delete-form', function(e) {
         e.preventDefault();
-
+		
         const form = $(this);
         const dishId = form.closest('.dish-info-container').find('input[name="dishId"]').val();
 
@@ -216,7 +216,7 @@ $(document).ready(function() {
             type: 'POST',
             success: function(response) {
                 form.closest('.dish-info-container').remove();
-                $('#messageContent').text('Блюдо успешно удалено');
+                $('#messageContent').text(response.message);
                 $('#messageModal').css('display', 'flex');
             },
             error: function(response) {

@@ -7,6 +7,7 @@ const path = require('path');
 const fs = require('fs');
 
 const connection = require('../database/database_connection.js');
+const { error } = require('console');
 
 router.get('/admin', (req, res) => {
 	if (req.session.user && req.session.user.is_admin == 1) {
@@ -224,7 +225,7 @@ router.post('/updateDish', upload.single('update-image'), (req, res) => {
 router.post('/admin/delete/:id', (req, res) => {
 	const dishId = req.params.id;
 
-	connection.query(`SELECT img FROM dishes WHERE id = ?`, [dishId], (error, result) => {
+	connection.query(`SELECT * FROM dishes WHERE id=?`, [dishId], (error, result) => {
 		if (error) {
 			return res.status(500).send({
 				success: false,
@@ -232,49 +233,60 @@ router.post('/admin/delete/:id', (req, res) => {
 			});
 		}
 
-		const imgPath = result[0]?.img;
-		if (imgPath) {
-			const absolutePath = path.join(__dirname, '..', 'public', imgPath);
+		const title = result[0].title;
 
-			fs.access(absolutePath, fs.constants.F_OK, (err) => {
-				if (err) {
-					console.error('File does not exist:', absolutePath);
-					return res.status(404).send({
-						success: false,
-						message: 'Image file not found'
-					});
-				}
-
-				fs.unlink(absolutePath, (err) => {
+		connection.query(`SELECT img FROM dishes WHERE id = ?`, [dishId], (error, result) => {
+			if (error) {
+				return res.status(500).send({
+					success: false,
+					message: 'DatabaseError'
+				});
+			}
+	
+			const imgPath = result[0]?.img;
+			if (imgPath) {
+				const absolutePath = path.join(__dirname, '..', 'public', imgPath);
+	
+				fs.access(absolutePath, fs.constants.F_OK, (err) => {
 					if (err) {
-						console.error('Error deleting image file:', err);
-						return res.status(500).send({
+						console.error('File does not exist:', absolutePath);
+						return res.status(404).send({
 							success: false,
-							message: 'Error deleting image file'
+							message: 'Image file not found'
 						});
 					}
-
-					connection.query(`DELETE FROM dishes WHERE id = ?`, [dishId], (error, result) => {
-						if (error) {
+	
+					fs.unlink(absolutePath, (err) => {
+						if (err) {
+							console.error('Error deleting image file:', err);
 							return res.status(500).send({
 								success: false,
-								message: 'DatabaseError'
+								message: 'Error deleting image file'
 							});
 						}
-
-						return res.status(200).send({
-							success: true,
-							message: 'Блюдо успешно удалено'
+	
+						connection.query(`DELETE FROM dishes WHERE id = ?`, [dishId], (error, result) => {
+							if (error) {
+								return res.status(500).send({
+									success: false,
+									message: 'DatabaseError'
+								});
+							}
+	
+							return res.status(200).send({
+								success: true,
+								message: `Блюдо ${title} успешно удалено`
+							});
 						});
 					});
 				});
-			});
-		} else {
-			return res.status(404).send({
-				success: false,
-				message: 'Image not found'
-			});
-		}
+			} else {
+				return res.status(404).send({
+					success: false,
+					message: 'Image not found'
+				});
+			}
+		});
 	});
 });
 
@@ -372,17 +384,26 @@ router.post('/updateUser', urlParser, (req, res) => {
 router.post('/admin/deleteUser/:id', (req, res) => {
 	const userId = req.params.id;
 
-	connection.query('DELETE FROM users WHERE id=?', [userId], (error, result) => {
+	connection.query(`SELECT * FROM users WHERE id=?`, [userId], (error, result) => {
 		if (error) {
-			return res.status(500).send({
+			return res.status(500).json({
 				success: false,
 				message: 'DatabaseError'
 			});
 		}
-
-		return res.status(200).send({
-			success: true,
-			message: 'Пользователь успешно удален'
+		const name = result[0].name;
+		connection.query('DELETE FROM users WHERE id=?', [userId], (error, result) => {
+			if (error) {
+				return res.status(500).json({
+					success: false,
+					message: 'DatabaseError'
+				});
+			}
+	
+			return res.status(200).json({
+				success: true,
+				message: `Пользователь ${name} успешно удален`
+			});
 		});
 	});
 });

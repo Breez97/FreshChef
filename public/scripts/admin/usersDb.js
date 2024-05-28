@@ -7,6 +7,10 @@ $(document).ready(function() {
 		$(this).closest('.modal').css('display', 'none');
 	});
 
+	$('.info-button').click(function() {
+		$('#messageModal').css('display', 'flex');
+	});
+
 	function checkFormFieldsAddUser() {
 		let isFormValid = true;
 
@@ -79,7 +83,7 @@ $(document).ready(function() {
 							<input type="hidden" name="userId" value="${user.id}">
 							<div class="button-container">
 								<a name="update-user-button" class="user-button">Изменить</a>
-								<form action="/admin/deleteUser/${user.id}" method="POST" class="delete-user-form">
+								<form action="/admin/deleteUser/${user.id}" method="POST" class="delete-form">
 									<button type="submit" class="user-button remove-button">Удалить</button>
 								</form>
 							</div>
@@ -155,9 +159,9 @@ $(document).ready(function() {
 	});
 
 	$('.content-container').on('submit', '.delete-form', function(e) {
-        e.preventDefault();
-        const form = $(this);
-        const userId = form.closest('.user-info-container').find('input[name="userId"]').val();
+		e.preventDefault();
+		const form = $(this);
+		const userId = form.closest('.user-info-container').find('input[name="userId"]').val();
 
 		$.ajax({
 			url: `/admin/deleteUser/${userId}`,
@@ -177,5 +181,5 @@ $(document).ready(function() {
 				$('#messageModal').css('display', 'flex');
 			}
 		});
-    });
+	});
 });
