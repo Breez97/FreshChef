@@ -29,10 +29,14 @@
 					<div class="info-input-container">
 						<input type="hidden" name="id" value="<%= (typeof user !== 'undefined' && user) ? user.id : '' %>">
 						<input type="text" name="name" placeholder="Имя Фамилия" value="<%= (typeof user !== 'undefined' && user) ? user.name : '' %>">
-						<input type="text" name="email" placeholder="Email" value="<%= (typeof user !== 'undefined' && user) ? user.email : '' %>">
+						<input type="email" name="email" placeholder="Email" value="<%= (typeof user !== 'undefined' && user) ? user.email : '' %>">
 						<input type="password" name="password" placeholder="Пароль">
-						<% if (typeof message !== 'undefined' && message) { %>
-							<div class="info-message"><%= message %></div>
+						<% if (typeof message !== 'undefined') { %>
+							<% if (message === 'Данные успешно сохранены') { %>
+								<div class="info-message black"><%= message %></div>
+							<% } else { %>
+								<div class="info-message"><%= message %></div>
+							<% } %>
 						<% } %>
 						<button type="submit" disabled>Сохранить</button>
 					</div>
@@ -67,6 +71,13 @@
 					<div class="header-text-info">У вас нет заказов</div>
 				<% } %>
 			</div>			
+		</div>
+	</div>
+
+	<div id="messageModal" class="modal">
+		<div class="modal-content">
+			<span class="close">&times;</span>
+			<div id="messageContent" class="header-title-text"></div>
 		</div>
 	</div>
 

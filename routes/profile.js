@@ -98,6 +98,7 @@ router.post('/save', urlParser, (req, res) => {
 
 					return res.status(200).contentType('text/html').render('profile', {
 						user: req.session.user,
+						message: 'Данные успешно сохранены',
 						currentUser: userResult[0],
 						orders: groupedOrders
 					});

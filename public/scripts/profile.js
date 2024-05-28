@@ -1,4 +1,8 @@
 $(document).ready(function() {
+	$('.close').on('click', function() {
+		$(this).closest('.modal').css('display', 'none');
+	});
+
 	function checkFields(fieldName) {
 		let email = $(`form.${fieldName} input[name="email"]`).val();
 		let password = $(`form.${fieldName} input[name="password"]`).val();
